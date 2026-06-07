@@ -12,14 +12,28 @@ export default function ProductDetail() {
   const [product, setProduct] = useState(null);
   const [qty, setQty] = useState(1);
   const { user } = useAuth();
-  const { addItem } = useGiftBox();
+  const { addItem, fetchGiftBox, getAvailableStock } = useGiftBox();
 
   useEffect(() => {
     api.get(`/products/${id}`).then(({ data }) => setProduct(data.product));
   }, [id]);
 
+  useEffect(() => {
+    if (user) fetchGiftBox();
+  }, [fetchGiftBox, user]);
+
+  const availableStock = product ? getAvailableStock(product) : 0;
+
+  useEffect(() => {
+    if (product && qty > availableStock) {
+      setQty(Math.max(availableStock, 1));
+    }
+  }, [availableStock, product, qty]);
+
   const handleAdd = async () => {
     if (!user) return toast.error('Please login first');
+    if (availableStock < 1) return toast.error('Out of stock');
+    if (qty > availableStock) return toast.error(`Only ${availableStock} left in stock`);
     try {
       await addItem(product._id, qty);
     } catch (err) {
@@ -46,18 +60,27 @@ export default function ProductDetail() {
           <span className="text-sm font-medium text-brand-600">{product.category}</span>
           <h1 className="mt-2 text-3xl font-bold">{product.name}</h1>
           <p className="mt-4 text-gray-600 dark:text-gray-300">{product.description}</p>
-          <p className="mt-2 text-sm text-gray-500">Stock: {product.stock}</p>
+          <p className="mt-4 text-2xl font-bold text-gray-900 dark:text-white">
+            {formatCurrency(product.price)}
+          </p>
+          <p className="mt-2 text-sm text-gray-500">Stock: {availableStock}</p>
           <div className="mt-8 flex items-center gap-4">
             <input
               type="number"
               min={1}
-              max={product.stock}
+              max={availableStock}
               value={qty}
               onChange={(e) => setQty(Number(e.target.value))}
               className="input-field w-24"
+              disabled={availableStock < 1}
             />
-            <button type="button" onClick={handleAdd} className="btn-primary">
-              Add to Gift Box
+            <button
+              type="button"
+              onClick={handleAdd}
+              disabled={availableStock < 1}
+              className="btn-primary disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              {availableStock < 1 ? 'Out of Stock' : 'Add to Gift Box'}
             </button>
           </div>
         </div>

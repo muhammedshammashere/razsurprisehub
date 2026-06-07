@@ -1,8 +1,11 @@
 import { Link } from 'react-router-dom';
 import { formatCurrency, getImageUrl } from '../../utils/formatCurrency';
+import { useGiftBox } from '../../context/GiftBoxContext';
 
 export default function ProductCard({ product, onAdd }) {
   const image = getImageUrl(product.images?.[0]?.url);
+  const { getAvailableStock } = useGiftBox();
+  const availableStock = getAvailableStock(product);
 
   return (
     <article className="card group overflow-hidden p-0 transition hover:shadow-md">
@@ -26,10 +29,19 @@ export default function ProductCard({ product, onAdd }) {
         <p className="mt-2 line-clamp-2 text-sm text-gray-500 dark:text-gray-400">
           {product.description}
         </p>
-        <div className="mt-4 flex items-center justify-end">
+        <div className="mt-4 flex items-center justify-between gap-3">
+          <div>
+            <p className="font-semibold text-gray-900 dark:text-white">{formatCurrency(product.price)}</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400">Stock: {availableStock}</p>
+          </div>
           {onAdd && (
-            <button type="button" onClick={() => onAdd(product)} className="btn-primary text-sm py-2">
-              Add to Box
+            <button
+              type="button"
+              onClick={() => onAdd(product)}
+              disabled={availableStock < 1}
+              className="btn-primary py-2 text-sm disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              {availableStock < 1 ? 'Out of Stock' : 'Add to Box'}
             </button>
           )}
         </div>

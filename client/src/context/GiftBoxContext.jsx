@@ -45,6 +45,24 @@ export const GiftBoxProvider = ({ children }) => {
     return data.giftBox;
   };
 
+  const getReservedQuantity = useCallback(
+    (productId) => {
+      if (!productId) return 0;
+      const id = productId.toString();
+      const item = giftBox?.items?.find((entry) => {
+        const entryId = entry.product?._id || entry.product;
+        return entryId?.toString() === id;
+      });
+      return item?.quantity || 0;
+    },
+    [giftBox]
+  );
+
+  const getAvailableStock = useCallback(
+    (product) => Math.max((product?.stock || 0) - getReservedQuantity(product?._id), 0),
+    [getReservedQuantity]
+  );
+
   const itemCount = giftBox?.items?.reduce((s, i) => s + i.quantity, 0) || 0;
 
   return (
@@ -58,6 +76,8 @@ export const GiftBoxProvider = ({ children }) => {
         updateItem,
         removeItem,
         updateBox,
+        getReservedQuantity,
+        getAvailableStock,
         setGiftBox,
       }}
     >

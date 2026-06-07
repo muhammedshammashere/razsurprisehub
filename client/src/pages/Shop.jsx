@@ -15,7 +15,11 @@ export default function Shop() {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const { user } = useAuth();
-  const { addItem } = useGiftBox();
+  const { addItem, fetchGiftBox } = useGiftBox();
+
+  useEffect(() => {
+    if (user) fetchGiftBox();
+  }, [fetchGiftBox, user]);
 
   useEffect(() => {
     const load = async () => {
