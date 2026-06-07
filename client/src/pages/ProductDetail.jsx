@@ -5,7 +5,7 @@ import api from '../api/axios';
 import { useAuth } from '../context/AuthContext';
 import { useGiftBox } from '../context/GiftBoxContext';
 import Loader from '../components/ui/Loader';
-import { formatCurrency, getImageUrl } from '../utils/formatCurrency';
+import { getImageUrl } from '../utils/formatCurrency';
 
 export default function ProductDetail() {
   const { id } = useParams();
@@ -60,9 +60,6 @@ export default function ProductDetail() {
           <span className="text-sm font-medium text-brand-600">{product.category}</span>
           <h1 className="mt-2 text-3xl font-bold">{product.name}</h1>
           <p className="mt-4 text-gray-600 dark:text-gray-300">{product.description}</p>
-          <p className="mt-4 text-2xl font-bold text-gray-900 dark:text-white">
-            {formatCurrency(product.price)}
-          </p>
           <p className="mt-2 text-sm text-gray-500">Stock: {availableStock}</p>
           <div className="mt-8 flex items-center gap-4">
             <input
