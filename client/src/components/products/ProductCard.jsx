@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { formatCurrency, getImageUrl } from '../../utils/formatCurrency';
+import { getImageUrl } from '../../utils/formatCurrency';
 import { useGiftBox } from '../../context/GiftBoxContext';
 
 export default function ProductCard({ product, onAdd }) {
@@ -29,11 +29,7 @@ export default function ProductCard({ product, onAdd }) {
         <p className="mt-2 line-clamp-2 text-sm text-gray-500 dark:text-gray-400">
           {product.description}
         </p>
-        <div className="mt-4 flex items-center justify-between gap-3">
-          <div>
-            <p className="font-semibold text-gray-900 dark:text-white">{formatCurrency(product.price)}</p>
-            <p className="text-xs text-gray-500 dark:text-gray-400">Stock: {availableStock}</p>
-          </div>
+        <div className="mt-4 flex items-center justify-end">
           {onAdd && (
             <button
               type="button"
