@@ -35,11 +35,13 @@ export default function ProductDetail() {
         ← Back to shop
       </Link>
       <div className="mt-8 grid gap-10 lg:grid-cols-2">
-        <img
-          src={getImageUrl(product.images?.[0]?.url)}
-          alt={product.name}
-          className="rounded-xl object-cover w-full max-h-[480px]"
-        />
+        <div className="flex min-h-[320px] items-center justify-center rounded-xl bg-gray-50 p-4 dark:bg-gray-900 sm:min-h-[420px]">
+          <img
+            src={getImageUrl(product.images?.[0]?.url)}
+            alt={product.name}
+            className="max-h-[520px] w-full object-contain"
+          />
+        </div>
         <div>
           <span className="text-sm font-medium text-brand-600">{product.category}</span>
           <h1 className="mt-2 text-3xl font-bold">{product.name}</h1>

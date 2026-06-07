@@ -6,11 +6,14 @@ export default function ProductCard({ product, onAdd }) {
 
   return (
     <article className="card group overflow-hidden p-0 transition hover:shadow-md">
-      <Link to={`/shop/${product._id}`}>
+      <Link
+        to={`/shop/${product._id}`}
+        className="flex h-56 items-center justify-center bg-gray-50 dark:bg-gray-900"
+      >
         <img
           src={image}
           alt={product.name}
-          className="h-48 w-full object-cover transition group-hover:scale-105"
+          className="h-full w-full object-contain p-3 transition group-hover:scale-105"
         />
       </Link>
       <div className="p-4">

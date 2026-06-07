@@ -53,11 +53,13 @@ export default function GiftBox() {
               const p = item.product;
               return (
                 <div key={p._id} className="card flex gap-4 flex-col sm:flex-row sm:items-center">
-                  <img
-                    src={getImageUrl(p.images?.[0]?.url)}
-                    alt={p.name}
-                    className="h-24 w-24 rounded-lg object-cover"
-                  />
+                  <div className="flex h-24 w-24 shrink-0 items-center justify-center rounded-lg bg-gray-50 p-2 dark:bg-gray-900">
+                    <img
+                      src={getImageUrl(p.images?.[0]?.url)}
+                      alt={p.name}
+                      className="h-full w-full object-contain"
+                    />
+                  </div>
                   <div className="flex-1">
                     <h3 className="font-semibold">{p.name}</h3>
                   </div>
