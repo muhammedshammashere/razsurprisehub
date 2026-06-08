@@ -2,6 +2,28 @@ import { createContext, useContext, useEffect, useState, useCallback } from 'rea
 import api from '../api/axios';
 
 const AuthContext = createContext(null);
+const SHARED_CUSTOMER_EMAIL = 'customer@surpriseventure.com';
+
+const getGuestCredentials = () => {
+  let email = localStorage.getItem('sv_guest_email');
+  let password = localStorage.getItem('sv_guest_password');
+  let name = localStorage.getItem('sv_guest_name');
+
+  if (!email || !password || !name) {
+    const id =
+      typeof crypto !== 'undefined' && crypto.randomUUID
+        ? crypto.randomUUID()
+        : `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+    email = `guest-${id}@razsurprisehub.local`;
+    password = `guest-${id}`.slice(0, 64);
+    name = 'Guest Customer';
+    localStorage.setItem('sv_guest_email', email);
+    localStorage.setItem('sv_guest_password', password);
+    localStorage.setItem('sv_guest_name', name);
+  }
+
+  return { email, password, name, phone: '' };
+};
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -12,33 +34,34 @@ export const AuthProvider = ({ children }) => {
     if (token) {
       try {
         const { data } = await api.get('/auth/me');
-        setUser(data.user);
-        setLoading(false);
-        return;
+        if (data.user?.email === SHARED_CUSTOMER_EMAIL) {
+          localStorage.removeItem('sv_token');
+        } else {
+          setUser(data.user);
+          setLoading(false);
+          return;
+        }
       } catch {
         localStorage.removeItem('sv_token');
       }
     }
 
+    const guest = getGuestCredentials();
+
     try {
       const { data } = await api.post('/auth/login', {
-        email: 'customer@surpriseventure.com',
-        password: 'customer123456',
+        email: guest.email,
+        password: guest.password,
       });
       localStorage.setItem('sv_token', data.token);
       setUser(data.user);
     } catch (err) {
       try {
-        const { data } = await api.post('/auth/register', {
-          name: 'Customer',
-          email: 'customer@surpriseventure.com',
-          password: 'customer123456',
-          phone: '1234567890',
-        });
+        const { data } = await api.post('/auth/register', guest);
         localStorage.setItem('sv_token', data.token);
         setUser(data.user);
       } catch (regErr) {
-        console.error('Auto-login and auto-register failed:', regErr);
+        console.error('Guest login and registration failed:', regErr);
         setUser(null);
       }
     } finally {
