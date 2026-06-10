@@ -20,7 +20,7 @@ export default function Navbar() {
     <header className="sticky top-0 z-40 border-b border-brand-100/50 bg-white/90 backdrop-blur dark:border-brand-900/30 dark:bg-brand-950/90">
       <nav className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6">
         <Link to="/" className="font-display text-xl font-bold text-brand-500 hover:scale-[1.02] transition-transform dark:text-brand-400 shrink-0 flex items-center gap-1.5">
-          <span>🎁</span>
+          
           <span>Raz Surprise Hub</span>
         </Link>
         

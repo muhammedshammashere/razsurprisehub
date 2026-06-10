@@ -23,7 +23,7 @@ export default function Landing() {
 
         <div className="relative mx-auto max-w-7xl px-4 text-center sm:px-6 z-10">
           <p className="text-xs font-bold uppercase tracking-widest text-brand-500 bg-brand-100/60 dark:bg-brand-900/30 dark:text-brand-300 px-3 py-1.5 rounded-full inline-block">
-            ✨ Curated surprise gifts 🎁
+             Curated surprise gifts 
           </p>
           <h1 className="mt-6 font-display text-4xl font-extrabold text-gray-900 dark:text-white sm:text-6xl tracking-tight">
             Build the perfect
@@ -37,10 +37,10 @@ export default function Landing() {
           </p>
           <div className="mt-10 flex flex-wrap justify-center gap-4">
             <Link to="/gift-box" className="btn-primary text-lg px-8 py-3 shadow-lg hover:shadow-brand-500/20 hover:scale-[1.03] transition-transform">
-              Start Building 🎁
+              Start Building 
             </Link>
             <Link to="/shop" className="btn-secondary text-lg px-8 py-3 hover:scale-[1.03] transition-transform">
-              Browse Shop 🛒
+              Browse Shop 
             </Link>
           </div>
         </div>
