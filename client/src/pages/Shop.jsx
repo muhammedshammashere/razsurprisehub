@@ -6,7 +6,7 @@ import { useAuth } from '../context/AuthContext';
 import { useGiftBox } from '../context/GiftBoxContext';
 import ProductCard from '../components/products/ProductCard';
 import Loader from '../components/ui/Loader';
-import { CATEGORIES } from '../utils/constants';
+import { CATEGORIES, CATEGORY_EMOJIS } from '../utils/constants';
 
 export default function Shop() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -59,18 +59,27 @@ export default function Shop() {
           <button
             type="button"
             onClick={() => setSearchParams({})}
-            className={`rounded-full px-4 py-1.5 text-sm ${!category ? 'bg-brand-600 text-white' : 'bg-gray-200 dark:bg-gray-800'}`}
+            className={`rounded-full px-4 py-1.5 text-sm font-medium transition-all duration-200 ${
+              !category
+                ? 'bg-gradient-to-r from-brand-500 to-brand-600 text-white shadow-md shadow-brand-500/25 scale-105'
+                : 'bg-brand-50/50 hover:bg-brand-100 text-gray-700 border border-brand-100/50 dark:bg-brand-900/10 dark:text-brand-300 dark:border-brand-900/30 dark:hover:bg-brand-900/20'
+            }`}
           >
-            All
+            ✨ All
           </button>
           {CATEGORIES.map((cat) => (
             <button
               key={cat}
               type="button"
               onClick={() => setSearchParams({ category: cat })}
-              className={`rounded-full px-4 py-1.5 text-sm ${category === cat ? 'bg-brand-600 text-white' : 'bg-gray-200 dark:bg-gray-800'}`}
+              className={`rounded-full px-4 py-1.5 text-sm font-medium transition-all duration-200 flex items-center gap-1.5 ${
+                category === cat
+                  ? 'bg-gradient-to-r from-brand-500 to-brand-600 text-white shadow-md shadow-brand-500/25 scale-105'
+                  : 'bg-brand-50/50 hover:bg-brand-100 text-gray-700 border border-brand-100/50 dark:bg-brand-900/10 dark:text-brand-300 dark:border-brand-900/30 dark:hover:bg-brand-900/20'
+              }`}
             >
-              {cat}
+              <span>{CATEGORY_EMOJIS[cat] || '🎁'}</span>
+              <span>{cat}</span>
             </button>
           ))}
         </div>

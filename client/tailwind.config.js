@@ -6,17 +6,17 @@ export default {
     extend: {
       colors: {
         brand: {
-          50: '#fff1f7',
-          100: '#ffe4ef',
-          200: '#fecddf',
-          300: '#fda4c9',
-          400: '#fb72ad',
-          500: '#f43f8c',
-          600: '#db2777', // Primary pink brand color
-          700: '#be185d', // Hover state
-          800: '#9d174d',
-          900: '#831843',
-          950: '#500724',
+          50: '#fff0f5',
+          100: '#fde2ed',
+          200: '#fbc6da',
+          300: '#f89bbd',
+          400: '#f46b9c',
+          500: '#ec407a',
+          600: '#d3245f',
+          700: '#b01548',
+          800: '#92123c',
+          900: '#500050',
+          950: '#330033',
         },
       },
       fontFamily: {

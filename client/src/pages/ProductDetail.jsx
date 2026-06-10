@@ -6,6 +6,7 @@ import { useAuth } from '../context/AuthContext';
 import { useGiftBox } from '../context/GiftBoxContext';
 import Loader from '../components/ui/Loader';
 import { getImageUrl } from '../utils/formatCurrency';
+import { CATEGORY_EMOJIS } from '../utils/constants';
 
 export default function ProductDetail() {
   const { id } = useParams();
@@ -57,8 +58,11 @@ export default function ProductDetail() {
           />
         </div>
         <div>
-          <span className="text-sm font-medium text-brand-600">{product.category}</span>
-          <h1 className="mt-2 text-3xl font-bold">{product.name}</h1>
+          <span className="text-xs font-bold uppercase tracking-wider text-brand-500 bg-brand-50 dark:bg-brand-900/30 dark:text-brand-300 px-2.5 py-1 rounded flex items-center gap-1.5 w-fit">
+            <span>{CATEGORY_EMOJIS[product.category] || '🎁'}</span>
+            <span>{product.category}</span>
+          </span>
+          <h1 className="mt-4 text-3xl font-bold">{product.name}</h1>
           <p className="mt-4 text-gray-600 dark:text-gray-300">{product.description}</p>
           <p className="mt-2 text-sm text-gray-500">Stock: {availableStock}</p>
           <div className="mt-8 flex items-center gap-4">

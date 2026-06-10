@@ -7,6 +7,15 @@ export const CATEGORIES = [
   'Custom Gifts',
 ];
 
+export const CATEGORY_EMOJIS = {
+  'Chocolates': '🍫',
+  'Flowers': '💐',
+  'Greeting Cards': '💌',
+  'Teddy Bears': '🧸',
+  'Perfumes': '✨',
+  'Custom Gifts': '🎁',
+};
+
 export const ORDER_STATUS_LABELS = {
   pending: 'Pending Payment',
   paid: 'Paid',
