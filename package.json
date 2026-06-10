@@ -1,0 +1,18 @@
+{
+  "name": "surprise-venture",
+  "version": "1.0.0",
+  "description": "Raz Surprise Hub Gift Box E-Commerce Platform",
+  "main": "startup.js",
+  "scripts": {
+    "start": "node startup.js",
+    "dev": "node startup.js",
+    "seed": "cd server && npm run seed"
+  },
+  "keywords": [
+    "giftbox",
+    "ecommerce",
+    "mern"
+  ],
+  "author": "",
+  "license": "MIT"
+}
