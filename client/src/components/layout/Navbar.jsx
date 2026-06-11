@@ -17,9 +17,9 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-brand-100/50 bg-white/90 backdrop-blur dark:border-brand-900/30 dark:bg-brand-950/90">
+    <header className="sticky top-0 z-40 border-b border-brand-100/50 bg-white/90 backdrop-blur dark:border-slate-800/30 dark:bg-slate-950/95">
       <nav className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6">
-        <Link to="/" className="font-display text-xl font-bold text-brand-500 hover:scale-[1.02] transition-transform dark:text-brand-400 shrink-0 flex items-center gap-1.5">
+        <Link to="/" className="font-display text-xl font-bold text-brand-500 hover:scale-[1.02] transition-transform dark:text-slate-100 shrink-0 flex items-center gap-1.5">
           
           <span>Raz Surprise Hub</span>
         </Link>
@@ -45,7 +45,7 @@ export default function Navbar() {
           {/* Mobile Menu Toggle Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="rounded-lg p-1.5 text-gray-500 hover:bg-gray-100 focus:outline-none dark:text-gray-400 dark:hover:bg-gray-800 md:hidden transition-colors"
+            className="rounded-lg p-1.5 text-gray-500 hover:bg-gray-100 focus:outline-none dark:text-slate-400 dark:hover:bg-slate-800 md:hidden transition-colors"
             aria-label="Toggle Menu"
           >
             <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -57,7 +57,7 @@ export default function Navbar() {
 
       {/* Mobile Menu Dropdown */}
       {isOpen && (
-        <div className="border-t border-brand-100/50 bg-white/95 px-6 py-4 shadow-lg dark:border-brand-900/30 dark:bg-brand-950/95 md:hidden flex flex-col gap-4 animate-fadeIn">
+        <div className="border-t border-brand-100/50 bg-white/95 px-6 py-4 shadow-lg dark:border-slate-800/30 dark:bg-slate-950/95 md:hidden flex flex-col gap-4 animate-fadeIn">
           <NavLink to="/shop" className={linkClass} onClick={() => setIsOpen(false)}>
             Shop
           </NavLink>

@@ -65,7 +65,7 @@ export default function Shop() {
                 : 'bg-brand-50/50 hover:bg-brand-100 text-gray-700 border border-brand-100/50 dark:bg-brand-900/10 dark:text-brand-300 dark:border-brand-900/30 dark:hover:bg-brand-900/20'
             }`}
           >
-            ✨ All
+             All
           </button>
           {CATEGORIES.map((cat) => (
             <button
@@ -78,7 +78,7 @@ export default function Shop() {
                   : 'bg-brand-50/50 hover:bg-brand-100 text-gray-700 border border-brand-100/50 dark:bg-brand-900/10 dark:text-brand-300 dark:border-brand-900/30 dark:hover:bg-brand-900/20'
               }`}
             >
-              <span>{CATEGORY_EMOJIS[cat] || '🎁'}</span>
+              <span>{CATEGORY_EMOJIS[cat] || ''}</span>
               <span>{cat}</span>
             </button>
           ))}

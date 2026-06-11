@@ -6,7 +6,7 @@ export default function Landing() {
   return (
     <div>
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-brand-50 via-white to-brand-100/40 py-20 dark:from-brand-950 dark:via-brand-900/10 dark:to-brand-900/30 sm:py-28">
+      <section className="relative overflow-hidden bg-gradient-to-br from-brand-50 via-white to-brand-100/40 py-20 dark:from-slate-950 dark:via-slate-900/30 dark:to-slate-900/20 sm:py-28">
         {/* Animated Floating Emojis */}
         <div className="absolute left-[10%] top-[20%] animate-bounce text-4xl opacity-50 duration-[4000ms] dark:opacity-35 select-none pointer-events-none" style={{ animationDelay: '0s' }}>
           🎈
@@ -81,45 +81,45 @@ export default function Landing() {
       <ReviewSection />
 
       {/* How It Works Section */}
-      <section className="bg-gradient-to-br from-brand-900 to-brand-950 py-20 text-white relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#ec407a_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none" />
+      <section className="bg-white text-slate-900 dark:bg-slate-950 dark:text-white py-20 relative overflow-hidden">
+        <div className="absolute inset-0 opacity-0 dark:opacity-10 dark:bg-[radial-gradient(circle_at_top,_rgba(236,64,122,0.18),transparent_35%)] dark:[background-size:22px_22px] pointer-events-none" />
         <div className="relative mx-auto max-w-7xl px-4 text-center sm:px-6 z-10">
           <h2 className="font-display text-3xl font-bold tracking-tight sm:text-4xl">
             How It Works
           </h2>
-          <p className="mt-3 text-brand-200 max-w-xl mx-auto text-sm">
+          <p className="mt-3 text-slate-600 dark:text-slate-300 max-w-xl mx-auto text-sm">
             Four simple steps to send a customized box full of love and surprise
           </p>
 
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            <div className="rounded-xl border border-brand-800/40 bg-brand-950/40 p-6 backdrop-blur-sm transition-all hover:-translate-y-1">
+            <div className="rounded-3xl border border-slate-200 bg-white/90 dark:border-slate-800/60 dark:bg-slate-950/80 p-6 backdrop-blur-md transition-all hover:-translate-y-1">
               <div className="text-4xl">🛍️</div>
-              <h3 className="mt-4 font-display text-lg font-bold text-brand-200">1. Pick Products</h3>
-              <p className="mt-2 text-xs text-brand-100/80 leading-relaxed">
+              <h3 className="mt-4 font-display text-lg font-bold text-slate-900 dark:text-slate-100">1. Pick Products</h3>
+              <p className="mt-2 text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
                 Select your favorite items from chocolates, cards, teddy bears, and perfumes.
               </p>
             </div>
 
-            <div className="rounded-xl border border-brand-800/40 bg-brand-950/40 p-6 backdrop-blur-sm transition-all hover:-translate-y-1">
+            <div className="rounded-3xl border border-slate-200 bg-white/90 dark:border-slate-800/60 dark:bg-slate-950/80 p-6 backdrop-blur-md transition-all hover:-translate-y-1">
               <div className="text-4xl">🎁</div>
-              <h3 className="mt-4 font-display text-lg font-bold text-brand-200">2. Build Your Box</h3>
-              <p className="mt-2 text-xs text-brand-100/80 leading-relaxed">
+              <h3 className="mt-4 font-display text-lg font-bold text-slate-900 dark:text-slate-100">2. Build Your Box</h3>
+              <p className="mt-2 text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
                 Add the selected items into your custom surprise gift box with a single tap.
               </p>
             </div>
 
-            <div className="rounded-xl border border-brand-800/40 bg-brand-950/40 p-6 backdrop-blur-sm transition-all hover:-translate-y-1">
+            <div className="rounded-3xl border border-slate-200 bg-white/90 dark:border-slate-800/60 dark:bg-slate-950/80 p-6 backdrop-blur-md transition-all hover:-translate-y-1">
               <div className="text-4xl">✍️</div>
-              <h3 className="mt-4 font-display text-lg font-bold text-brand-200">3. Personalize</h3>
-              <p className="mt-2 text-xs text-brand-100/80 leading-relaxed">
+              <h3 className="mt-4 font-display text-lg font-bold text-slate-900 dark:text-slate-100">3. Personalize</h3>
+              <p className="mt-2 text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
                 Add a customized message, specify a delivery date, and add final instructions.
               </p>
             </div>
 
-            <div className="rounded-xl border border-brand-800/40 bg-brand-950/40 p-6 backdrop-blur-sm transition-all hover:-translate-y-1">
+            <div className="rounded-3xl border border-slate-200 bg-white/90 dark:border-slate-800/60 dark:bg-slate-950/80 p-6 backdrop-blur-md transition-all hover:-translate-y-1">
               <div className="text-4xl">💬</div>
-              <h3 className="mt-4 font-display text-lg font-bold text-brand-200">4. Checkout</h3>
-              <p className="mt-2 text-xs text-brand-100/80 leading-relaxed">
+              <h3 className="mt-4 font-display text-lg font-bold text-slate-900 dark:text-slate-100">4. Checkout</h3>
+              <p className="mt-2 text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
                 Confirm details and connect automatically to WhatsApp to complete your payment.
               </p>
             </div>
