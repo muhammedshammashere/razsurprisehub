@@ -105,7 +105,7 @@ export default function GiftBox() {
             <input
               type="date"
               min={minDate()}
-              className="input-field"
+              className="input-field date-field"
               value={deliveryDate}
               onChange={(e) => setDeliveryDate(e.target.value)}
               onBlur={saveDetails}
