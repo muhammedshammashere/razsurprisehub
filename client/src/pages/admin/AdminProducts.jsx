@@ -14,6 +14,22 @@ const emptyProduct = {
   images: [{ url: '' }],
 };
 
+const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
+
+const readFileAsDataUrl = (file) =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = () => reject(new Error('Failed to read image file'));
+    reader.readAsDataURL(file);
+  });
+
+const getImageLabel = (url) => {
+  if (!url) return '';
+  if (url.startsWith('data:')) return 'Uploaded image';
+  return url;
+};
+
 export default function AdminProducts() {
   const [products, setProducts] = useState([]);
   const [form, setForm] = useState(emptyProduct);
@@ -27,25 +43,31 @@ export default function AdminProducts() {
     const file = e.target.files[0];
     if (!file) return;
 
-    const formData = new FormData();
-    formData.append('image', file);
+    if (!file.type.startsWith('image/')) {
+      toast.error('Please choose an image file');
+      e.target.value = '';
+      return;
+    }
+
+    if (file.size > MAX_IMAGE_SIZE) {
+      toast.error('Image must be 5MB or smaller');
+      e.target.value = '';
+      return;
+    }
 
     setUploading(true);
     try {
-      const { data } = await api.post('/products/upload', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+      const imageUrl = await readFileAsDataUrl(file);
       setForm((prev) => ({
         ...prev,
-        images: [{ url: data.url }],
+        images: [{ url: imageUrl }],
       }));
-      toast.success('Image uploaded successfully');
+      toast.success('Image ready. Save changes to publish it.');
     } catch (err) {
-      toast.error(err.message || 'Failed to upload image');
+      toast.error(err.message || 'Failed to prepare image');
     } finally {
       setUploading(false);
+      e.target.value = '';
     }
   };
 
@@ -225,16 +247,29 @@ export default function AdminProducts() {
                           />
                           <div className="text-left">
                             <span className="text-xs font-semibold text-green-600 dark:text-green-400 block">✓ Uploaded</span>
-                            <span className="text-xs text-slate-500 truncate max-w-[180px] block">{form.images[0].url}</span>
+                            <span className="text-xs text-slate-500 truncate max-w-[180px] block">
+                              {getImageLabel(form.images[0].url)}
+                            </span>
                           </div>
                         </div>
-                        <button
-                          type="button"
-                          onClick={() => setForm((prev) => ({ ...prev, images: [{ url: '' }] }))}
-                          className="text-xs text-red-600 hover:underline font-semibold"
-                        >
-                          Remove
-                        </button>
+                        <div className="flex items-center gap-3">
+                          <label className="cursor-pointer text-xs font-semibold text-brand-600 hover:underline">
+                            Change
+                            <input
+                              type="file"
+                              accept="image/*"
+                              onChange={handleFileUpload}
+                              className="hidden"
+                            />
+                          </label>
+                          <button
+                            type="button"
+                            onClick={() => setForm((prev) => ({ ...prev, images: [{ url: '' }] }))}
+                            className="text-xs text-red-600 hover:underline font-semibold"
+                          >
+                            Remove
+                          </button>
+                        </div>
                       </div>
                     ) : (
                       <label className="cursor-pointer py-2 text-center w-full">
@@ -267,7 +302,9 @@ export default function AdminProducts() {
                           alt="Preview"
                           className="h-10 w-10 object-cover rounded-lg border dark:border-slate-800"
                         />
-                        <span className="text-xs text-slate-500 truncate max-w-[280px]">{form.images[0].url}</span>
+                        <span className="text-xs text-slate-500 truncate max-w-[280px]">
+                          {getImageLabel(form.images[0].url)}
+                        </span>
                       </div>
                     )}
                   </div>
