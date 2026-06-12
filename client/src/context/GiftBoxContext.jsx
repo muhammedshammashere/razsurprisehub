@@ -27,9 +27,9 @@ export const GiftBoxProvider = ({ children }) => {
     return data.giftBox;
   };
 
-  const updateItem = async (productId, quantity) => {
+  const updateItem = async (productId, quantity, options = {}) => {
     const { data } = await api.patch(`/gift-box/items/${productId}`, { quantity });
-    setGiftBox(data.giftBox);
+    if (!options.skipSetGiftBox) setGiftBox(data.giftBox);
     return data.giftBox;
   };
 
