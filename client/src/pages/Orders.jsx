@@ -22,7 +22,7 @@ export default function Orders() {
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
       <h1 className="text-3xl font-bold">Order History</h1>
       {orders.length === 0 ? (
-        <p className="mt-8 text-gray-500">No orders yet.</p>
+        <p className="mt-8 text-gray-500 dark:text-gray-400">No orders yet.</p>
       ) : (
         <div className="mt-8 space-y-4">
           {orders.map((order) => (
@@ -33,7 +33,7 @@ export default function Orders() {
             >
               <div>
                 <p className="font-semibold">{order.orderNumber}</p>
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-gray-500 dark:text-gray-400">
                   {new Date(order.createdAt).toLocaleDateString()}
                 </p>
               </div>

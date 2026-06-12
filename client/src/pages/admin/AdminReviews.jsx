@@ -93,18 +93,18 @@ export default function AdminReviews() {
 
       <div className="mt-8 grid gap-4 sm:grid-cols-3">
         <div className="card">
-          <p className="text-sm text-slate-500">Total reviews</p>
+          <p className="text-sm text-slate-500 dark:text-slate-400">Total reviews</p>
           <p className="mt-2 text-2xl font-bold">{reviews.length}</p>
         </div>
         <div className="card">
-          <p className="text-sm text-slate-500">Average rating</p>
+          <p className="text-sm text-slate-500 dark:text-slate-400">Average rating</p>
           <div className="mt-2 flex items-center gap-3">
             <p className="text-2xl font-bold">{averageRating}</p>
             <Stars rating={Math.round(Number(averageRating))} />
           </div>
         </div>
         <div className="card">
-          <p className="text-sm text-slate-500">Latest review</p>
+          <p className="text-sm text-slate-500 dark:text-slate-400">Latest review</p>
           <p className="mt-2 truncate text-sm font-semibold">
             {reviews[0]?.name || 'No reviews yet'}
           </p>
@@ -114,11 +114,11 @@ export default function AdminReviews() {
       <div className="mt-8 card overflow-hidden p-0">
         <div className="border-b border-slate-200 px-6 py-4 dark:border-slate-800">
           <h2 className="font-semibold text-slate-950 dark:text-white">All reviews</h2>
-          <p className="mt-1 text-sm text-slate-500">Remove inappropriate or spam reviews below.</p>
+          <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">Remove inappropriate or spam reviews below.</p>
         </div>
 
         {reviews.length === 0 ? (
-          <p className="px-6 py-10 text-center text-sm text-slate-500">No reviews yet.</p>
+          <p className="px-6 py-10 text-center text-sm text-slate-500 dark:text-slate-400">No reviews yet.</p>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full min-w-[640px] text-sm">
@@ -148,7 +148,7 @@ export default function AdminReviews() {
                     <td className="max-w-xs px-6 py-4 text-slate-600 dark:text-slate-300">
                       <span className="line-clamp-2">&ldquo;{review.text}&rdquo;</span>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-slate-500">
+                    <td className="px-6 py-4 whitespace-nowrap text-slate-500 dark:text-slate-400">
                       {review.createdAt
                         ? new Date(review.createdAt).toLocaleDateString()
                         : '—'}

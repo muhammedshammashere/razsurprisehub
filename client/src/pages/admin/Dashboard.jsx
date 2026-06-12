@@ -40,7 +40,7 @@ export default function Dashboard() {
           { label: 'Orders', value: stats.totalOrders },
         ].map((s) => (
           <div key={s.label} className="card">
-            <p className="text-sm text-gray-500">{s.label}</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400">{s.label}</p>
             <p className="mt-2 text-2xl font-bold">{s.value}</p>
           </div>
         ))}

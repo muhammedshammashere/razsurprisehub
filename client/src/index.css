@@ -22,13 +22,14 @@
 
 @layer base {
   body {
-    @apply text-slate-900 antialiased transition-colors duration-200 dark:text-slate-100;
-    background: var(--sv-gradient-soft);
+    @apply text-slate-100 antialiased transition-colors duration-200;
+    background: var(--sv-gradient-dark);
     background-attachment: fixed;
     font-family: 'Inter', sans-serif;
   }
-  .dark body {
-    background: var(--sv-gradient-dark);
+  html:not(.dark) body {
+    @apply text-slate-900;
+    background: var(--sv-gradient-soft);
     background-attachment: fixed;
   }
   h1, h2, h3, h4, h5, h6 {
@@ -39,13 +40,13 @@
 @layer components {
   .surface-gradient {
     background:
-      linear-gradient(135deg, rgb(255 255 255 / 0.92), rgb(255 255 255 / 0.78)),
-      var(--sv-gradient-soft);
-  }
-  .dark .surface-gradient {
-    background:
       linear-gradient(135deg, rgb(45 0 45 / 0.82), rgb(80 0 80 / 0.52)),
       var(--sv-gradient-dark);
+  }
+  html:not(.dark) .surface-gradient {
+    background:
+      linear-gradient(135deg, rgb(255 255 255 / 0.92), rgb(255 255 255 / 0.78)),
+      var(--sv-gradient-soft);
   }
   .brand-gradient {
     background: var(--sv-gradient);
@@ -83,13 +84,13 @@
   height: 9.5rem;
   overflow: hidden;
   border-radius: 0.75rem;
-  border: 1px solid rgb(80 0 80 / 0.12);
-  background: rgb(255 255 255 / 0.75);
+  border: 1px solid rgb(236 64 122 / 0.22);
+  background: rgb(80 0 80 / 0.22);
 }
 
-.dark .review-marquee {
-  border-color: rgb(236 64 122 / 0.22);
-  background: rgb(80 0 80 / 0.22);
+html:not(.dark) .review-marquee {
+  border-color: rgb(80 0 80 / 0.12);
+  background: rgb(255 255 255 / 0.75);
 }
 
 @keyframes sv-marquee-scroll {
@@ -119,16 +120,16 @@
   flex-direction: column;
   gap: 0.5rem;
   border-radius: 0.875rem;
-  border: 1px solid rgb(80 0 80 / 0.1);
-  background: white;
+  border: 1px solid rgb(236 64 122 / 0.2);
+  background: rgb(45 0 45 / 0.92);
   padding: 0.875rem 1rem;
-  box-shadow: 0 4px 18px rgb(80 0 80 / 0.08);
+  box-shadow: 0 4px 16px rgb(0 0 0 / 0.45);
 }
 
-.dark .review-marquee-chip {
-  border-color: rgb(236 64 122 / 0.2);
-  background: rgb(45 0 45 / 0.92);
-  box-shadow: 0 4px 16px rgb(0 0 0 / 0.45);
+html:not(.dark) .review-marquee-chip {
+  border-color: rgb(80 0 80 / 0.1);
+  background: white;
+  box-shadow: 0 4px 18px rgb(80 0 80 / 0.08);
 }
 
 .review-marquee-stars {
@@ -144,11 +145,11 @@
   font-size: 0.8125rem;
   line-height: 1.45;
   font-style: italic;
-  color: rgb(71 85 105);
+  color: rgb(244 245 247);
 }
 
-.dark .review-marquee-quote {
-  color: rgb(244 245 247);
+html:not(.dark) .review-marquee-quote {
+  color: rgb(71 85 105);
 }
 
 .review-marquee-author {
@@ -157,21 +158,21 @@
   gap: 0.375rem;
   margin-top: auto;
   padding-top: 0.375rem;
-  border-top: 1px solid rgb(80 0 80 / 0.1);
+  border-top: 1px solid rgb(236 64 122 / 0.18);
 }
 
-.dark .review-marquee-author {
-  border-top-color: rgb(236 64 122 / 0.18);
+html:not(.dark) .review-marquee-author {
+  border-top-color: rgb(80 0 80 / 0.1);
 }
 
 .review-marquee-name {
   font-size: 0.8125rem;
   font-weight: 600;
-  color: rgb(15 23 42);
+  color: white;
 }
 
-.dark .review-marquee-name {
-  color: white;
+html:not(.dark) .review-marquee-name {
+  color: rgb(15 23 42);
 }
 
 .review-marquee-fade {
@@ -184,19 +185,19 @@
 
 .review-marquee-fade--left {
   left: 0;
-  background: linear-gradient(to right, white, rgb(255 255 255 / 0.9), transparent);
+  background: linear-gradient(to right, rgb(45 0 45), rgb(45 0 45 / 0.9), transparent);
 }
 
-.dark .review-marquee-fade--left {
-  background: linear-gradient(to right, rgb(45 0 45), rgb(45 0 45 / 0.9), transparent);
+html:not(.dark) .review-marquee-fade--left {
+  background: linear-gradient(to right, white, rgb(255 255 255 / 0.9), transparent);
 }
 
 .review-marquee-fade--right {
   right: 0;
-  background: linear-gradient(to left, white, rgb(255 255 255 / 0.9), transparent);
+  background: linear-gradient(to left, rgb(45 0 45), rgb(45 0 45 / 0.9), transparent);
 }
 
-.dark .review-marquee-fade--right {
-  background: linear-gradient(to left, rgb(45 0 45), rgb(45 0 45 / 0.9), transparent);
+html:not(.dark) .review-marquee-fade--right {
+  background: linear-gradient(to left, white, rgb(255 255 255 / 0.9), transparent);
 }
 

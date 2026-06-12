@@ -90,7 +90,7 @@ export default function GiftBox() {
         <div className="lg:col-span-2 space-y-4">
           {items.length === 0 ? (
             <div className="card text-center py-12">
-              <p className="text-gray-500">Your gift box is empty.</p>
+              <p className="text-gray-500 dark:text-gray-400">Your gift box is empty.</p>
               <Link to="/shop" className="btn-primary mt-4 inline-block">
                 Browse products
               </Link>

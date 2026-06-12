@@ -70,7 +70,7 @@ export default function ProductDetail() {
           </span>
           <h1 className="mt-4 text-3xl font-bold">{product.name}</h1>
           <p className="mt-4 text-gray-600 dark:text-gray-300">{product.description}</p>
-          <p className="mt-2 text-sm text-gray-500">Stock: {availableStock}</p>
+          <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">Stock: {availableStock}</p>
           <div className="mt-8 flex items-center gap-4">
             <div className="flex h-11 items-center overflow-hidden rounded-lg border border-brand-900/10 bg-white dark:border-brand-400/15 dark:bg-white/5">
               <button

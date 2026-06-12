@@ -55,9 +55,9 @@ export default function Login() {
             {loading ? 'Signing in...' : 'Login'}
           </button>
         </form>
-        <p className="mt-4 text-center text-sm text-gray-500">
+        <p className="mt-4 text-center text-sm text-gray-500 dark:text-gray-400">
           No account?{' '}
-          <Link to="/register" className="text-brand-600 hover:underline">
+          <Link to="/register" className="text-brand-600 hover:underline dark:text-brand-300">
             Register
           </Link>
         </p>

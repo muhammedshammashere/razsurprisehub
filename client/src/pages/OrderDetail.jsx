@@ -52,14 +52,14 @@ export default function OrderDetail() {
             ))}
           </div>
         </div>
-        <div className="mt-8 space-y-2 border-t pt-6">
+        <div className="mt-8 space-y-2 border-t border-brand-900/10 pt-6 dark:border-brand-400/15">
           <h3 className="font-semibold text-base mb-2">Items</h3>
           {order.items.map((item, i) => (
             <div key={i} className="flex justify-between text-sm">
               <span className="text-gray-700 dark:text-gray-300">
                 {item.name}
               </span>
-              <span className="text-gray-500 font-medium">Qty: {item.quantity}</span>
+              <span className="text-gray-500 font-medium dark:text-gray-400">Qty: {item.quantity}</span>
             </div>
           ))}
         </div>
@@ -69,7 +69,7 @@ export default function OrderDetail() {
             <p className="mt-1 italic">{order.personalizedMessage}</p>
           </div>
         )}
-        <p className="mt-4 text-sm text-gray-500">
+        <p className="mt-4 text-sm text-gray-500 dark:text-gray-400">
           Delivery: {new Date(order.deliveryDate).toLocaleDateString()}
         </p>
       </div>

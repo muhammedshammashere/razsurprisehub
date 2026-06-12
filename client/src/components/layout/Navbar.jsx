@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useGiftBox } from '../../context/GiftBoxContext';
@@ -15,13 +15,46 @@ export default function Navbar() {
   const { user } = useAuth();
   const { itemCount } = useGiftBox();
   const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    let frameId = null;
+
+    const updateScrollState = () => {
+      frameId = null;
+      setIsScrolled(window.scrollY > 8);
+    };
+
+    const onScroll = () => {
+      if (frameId === null) {
+        frameId = window.requestAnimationFrame(updateScrollState);
+      }
+    };
+
+    updateScrollState();
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      if (frameId !== null) window.cancelAnimationFrame(frameId);
+    };
+  }, []);
+
+  const headerClass = [
+    'sticky top-0 z-40 transition-[background-color,border-color,box-shadow,backdrop-filter] duration-300 ease-out',
+    isScrolled
+      ? 'border-b border-brand-900/10 bg-white/75 shadow-lg shadow-brand-900/10 backdrop-blur-lg dark:border-brand-400/20 dark:bg-brand-950/70 dark:shadow-black/30'
+      : 'border-b border-transparent bg-transparent shadow-none backdrop-blur-0',
+  ].join(' ');
 
   return (
-    <header className="sticky top-0 z-40 border-b border-brand-900/10 bg-white/80 shadow-sm shadow-brand-900/5 backdrop-blur-xl dark:border-brand-400/20 dark:bg-brand-950/90">
+    <header className={headerClass}>
       <div className="h-0.5 w-full brand-gradient" />
       <nav className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6">
-        <Link to="/" className="font-display text-gradient text-xl font-bold hover:scale-[1.02] transition-transform shrink-0 flex items-center gap-1.5">
-          
+        <Link
+          to="/"
+          className="flex shrink-0 items-center gap-1.5 font-display text-xl font-extrabold text-secondary transition-all duration-300 hover:scale-[1.02] hover:text-brand-800 dark:text-brand-100 dark:drop-shadow-[0_0_14px_rgba(236,64,122,0.18)] dark:hover:text-white"
+        >
           <span>Raz Surprise Hub</span>
         </Link>
         
@@ -46,7 +79,9 @@ export default function Navbar() {
           {/* Mobile Menu Toggle Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="rounded-lg p-1.5 text-gray-500 hover:bg-gray-100 focus:outline-none dark:text-slate-400 dark:hover:bg-slate-800 md:hidden transition-colors"
+            className="rounded-lg p-1.5 text-slate-600 transition-colors hover:bg-white/80 hover:text-brand-700 focus:outline-none focus:ring-2 focus:ring-brand-500 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white md:hidden"
+            aria-expanded={isOpen}
+            aria-controls="mobile-navigation"
             aria-label="Toggle Menu"
           >
             <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -58,7 +93,7 @@ export default function Navbar() {
 
       {/* Mobile Menu Dropdown */}
       {isOpen && (
-        <div className="border-t border-brand-900/10 bg-white/95 px-6 py-4 shadow-lg dark:border-brand-400/20 dark:bg-brand-950/95 md:hidden flex flex-col gap-4 animate-fadeIn">
+        <div id="mobile-navigation" className="flex flex-col gap-4 border-t border-brand-900/10 bg-white/90 px-6 py-4 shadow-lg shadow-brand-900/10 backdrop-blur-lg dark:border-brand-400/20 dark:bg-brand-950/85 dark:shadow-black/30 md:hidden">
           <NavLink to="/shop" className={linkClass} onClick={() => setIsOpen(false)}>
             Shop
           </NavLink>

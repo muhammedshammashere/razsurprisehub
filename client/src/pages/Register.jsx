@@ -44,9 +44,9 @@ export default function Register() {
             {loading ? 'Creating...' : 'Register'}
           </button>
         </form>
-        <p className="mt-4 text-center text-sm text-gray-500">
+        <p className="mt-4 text-center text-sm text-gray-500 dark:text-gray-400">
           Have an account?{' '}
-          <Link to="/login" className="text-brand-600 hover:underline">
+          <Link to="/login" className="text-brand-600 hover:underline dark:text-brand-300">
             Login
           </Link>
         </p>

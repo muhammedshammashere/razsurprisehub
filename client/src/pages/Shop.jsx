@@ -106,7 +106,7 @@ export default function Shop() {
         </div>
       )}
       {!loading && products.length === 0 && (
-        <p className="py-12 text-center text-gray-500">No products found.</p>
+        <p className="py-12 text-center text-gray-500 dark:text-gray-400">No products found.</p>
       )}
     </div>
   );

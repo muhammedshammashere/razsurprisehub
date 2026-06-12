@@ -62,11 +62,11 @@ ${itemsText}`;
       <h1 className="text-3xl font-bold">Checkout</h1>
       <form onSubmit={handlePay} className="mt-8 space-y-6">
         <div className="card space-y-2 text-sm">
-          <h3 className="font-semibold text-base border-b pb-2 mb-2">Order Items</h3>
+          <h3 className="mb-2 border-b border-brand-900/10 pb-2 text-base font-semibold dark:border-brand-400/15">Order Items</h3>
           {giftBox.items?.map((item) => (
             <div key={item.product?._id || item._id} className="flex justify-between">
               <span className="text-gray-700 dark:text-gray-300">{item.product?.name}</span>
-              <span className="text-gray-500 font-medium">Qty: {item.quantity}</span>
+              <span className="text-gray-500 font-medium dark:text-gray-400">Qty: {item.quantity}</span>
             </div>
           ))}
         </div>
