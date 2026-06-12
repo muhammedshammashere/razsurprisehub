@@ -116,9 +116,9 @@ export default function ReviewSection() {
   };
 
   return (
-    <section className="bg-white py-16 dark:bg-slate-950">
+    <section className="py-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
-        <div className="rounded-lg border border-brand-100 bg-gradient-to-br from-brand-50 via-white to-rose-50 p-6 shadow-sm dark:border-brand-950/50 dark:from-slate-900 dark:via-slate-900 dark:to-brand-950/20 sm:p-8">
+        <div className="surface-gradient rounded-lg border border-brand-900/10 p-6 shadow-xl shadow-brand-900/10 dark:border-brand-400/20 sm:p-8">
           <div className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-end">
             <div>
               <p className="text-sm font-semibold uppercase tracking-widest text-brand-600 dark:text-brand-400">
@@ -133,7 +133,7 @@ export default function ReviewSection() {
               </p>
             </div>
 
-            <div className="rounded-lg border border-white/80 bg-white/80 p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900/80">
+            <div className="rounded-lg border border-brand-900/10 bg-white/80 p-4 shadow-sm dark:border-brand-400/20 dark:bg-white/5">
               <div className="flex items-end gap-3">
                 <span className="font-display text-5xl font-bold text-slate-950 dark:text-white">
                   {averageRating}
@@ -150,7 +150,7 @@ export default function ReviewSection() {
 
           <form
             onSubmit={handleSubmit}
-            className="mt-8 rounded-lg border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900"
+            className="mt-8 rounded-lg border border-brand-900/10 bg-white p-5 shadow-sm dark:border-brand-400/20 dark:bg-white/5"
           >
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div>

@@ -24,7 +24,7 @@ export const openRazorpayCheckout = async ({ keyId, razorpayOrderId, amount, ord
         name: user?.name,
         email: user?.email,
       },
-      theme: { color: '#ec4899' },
+      theme: { color: '#ec407a' },
       handler: async (response) => {
         try {
           await onSuccess({

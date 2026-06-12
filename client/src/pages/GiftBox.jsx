@@ -112,7 +112,7 @@ export default function GiftBox() {
                     <h3 className="font-semibold">{p.name}</h3>
                   </div>
                   <div className="flex items-center gap-3">
-                    <div className="flex h-10 items-center overflow-hidden rounded-lg border border-slate-200 bg-white dark:border-slate-800/40 dark:bg-slate-950">
+                    <div className="flex h-10 items-center overflow-hidden rounded-lg border border-brand-900/10 bg-white dark:border-brand-400/15 dark:bg-white/5">
                       <button
                         type="button"
                         aria-label={`Decrease ${p.name} quantity`}
@@ -122,7 +122,7 @@ export default function GiftBox() {
                       >
                         -
                       </button>
-                      <span className="flex h-10 w-12 items-center justify-center border-x border-slate-200 text-sm font-semibold dark:border-slate-800/40">
+                      <span className="flex h-10 w-12 items-center justify-center border-x border-brand-900/10 text-sm font-semibold dark:border-brand-400/15">
                         {quantity}
                       </span>
                       <button

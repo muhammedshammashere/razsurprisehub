@@ -4,9 +4,12 @@ import { CATEGORIES, CATEGORY_EMOJIS } from '../utils/constants';
 
 export default function Landing() {
   return (
-    <div>
+    <div className="relative">
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-brand-50 via-white to-brand-100/40 py-20 dark:from-slate-950 dark:via-slate-900/30 dark:to-slate-900/20 sm:py-28">
+      <section className="surface-gradient relative overflow-hidden py-20 sm:py-28">
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-px brand-gradient opacity-70" />
+        <div className="pointer-events-none absolute -right-24 top-16 h-72 w-72 rounded-full bg-brand-500/15 blur-3xl dark:bg-brand-400/15" />
+        <div className="pointer-events-none absolute -left-24 bottom-10 h-72 w-72 rounded-full bg-brand-900/10 blur-3xl dark:bg-white/10" />
         {/* Animated Floating Emojis */}
         <div className="absolute left-[10%] top-[20%] animate-bounce text-4xl opacity-50 duration-[4000ms] dark:opacity-35 select-none pointer-events-none" style={{ animationDelay: '0s' }}>
           🎈
@@ -22,16 +25,16 @@ export default function Landing() {
         </div>
 
         <div className="relative mx-auto max-w-7xl px-4 text-center sm:px-6 z-10">
-          <p className="text-xs font-bold uppercase tracking-widest text-brand-500 bg-brand-100/60 dark:bg-brand-900/30 dark:text-brand-300 px-3 py-1.5 rounded-full inline-block">
+          <p className="inline-block rounded-full border border-brand-500/20 bg-white/75 px-3 py-1.5 text-xs font-bold uppercase tracking-widest text-brand-900 shadow-sm backdrop-blur dark:border-brand-400/20 dark:bg-white/10 dark:text-brand-100">
              Curated surprise gifts 
           </p>
-          <h1 className="mt-6 font-display text-4xl font-extrabold text-gray-900 dark:text-white sm:text-6xl tracking-tight">
+          <h1 className="mt-6 font-display text-4xl font-extrabold tracking-tight text-brand-950 dark:text-white sm:text-6xl">
             Build the perfect
-            <span className="block mt-2 bg-gradient-to-r from-brand-500 to-brand-900 bg-clip-text text-transparent dark:from-brand-400 dark:to-brand-200">
+            <span className="text-gradient mt-2 block">
               gift box
             </span>
           </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
+          <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-slate-700 dark:text-brand-50/85">
             Mix chocolates, flowers, cards, teddy bears, perfumes and custom gifts. Add a personal
             message, pick a delivery date, and checkout securely via WhatsApp.
           </p>
@@ -47,9 +50,9 @@ export default function Landing() {
       </section>
 
       {/* Category Section */}
-      <section className="py-20 bg-white dark:bg-brand-950/20">
+      <section className="py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
-          <h2 className="text-center font-display text-3xl font-bold text-gray-900 dark:text-white">
+          <h2 className="text-center font-display text-3xl font-bold text-brand-950 dark:text-white">
             Shop by category
           </h2>
           <p className="mt-2 text-center text-sm text-gray-500 dark:text-gray-400">
@@ -60,7 +63,7 @@ export default function Landing() {
               <Link
                 key={cat}
                 to={`/shop?category=${encodeURIComponent(cat)}`}
-                className="card flex items-center justify-between transition-all duration-300 hover:border-brand-400/80 hover:shadow-lg hover:-translate-y-1 group"
+                className="card group flex items-center justify-between transition-all duration-300 hover:-translate-y-1 hover:border-brand-500/60 hover:shadow-lg"
               >
                 <span className="font-semibold text-gray-800 dark:text-gray-200 flex items-center gap-3">
                   <span className="text-2xl transition-transform group-hover:scale-125 duration-300">
@@ -68,7 +71,7 @@ export default function Landing() {
                   </span>
                   <span>{cat}</span>
                 </span>
-                <span className="text-brand-500 transition-transform group-hover:translate-x-1 duration-200 font-bold text-lg">
+                <span className="text-lg font-bold text-brand-500 transition-transform duration-200 group-hover:translate-x-1 group-hover:text-brand-900 dark:group-hover:text-brand-300">
                   →
                 </span>
               </Link>
@@ -81,12 +84,12 @@ export default function Landing() {
       <ReviewSection />
 
       {/* How It Works Section */}
-      <section className="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-white py-20 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-0 dark:opacity-10 dark:bg-[radial-gradient(circle_at_top,_rgba(236,64,122,0.18),transparent_35%)] dark:[background-size:22px_22px] pointer-events-none" />
+      <section className="surface-gradient relative overflow-hidden py-20 text-slate-900 dark:text-white">
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-px brand-gradient opacity-60" />
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 z-10">
-          <div className="rounded-3xl border border-slate-200 bg-white p-10 shadow-sm dark:border-slate-800/60 dark:bg-slate-900/95">
+          <div className="rounded-3xl border border-brand-900/10 bg-white/80 p-10 shadow-xl shadow-brand-900/10 backdrop-blur dark:border-brand-400/20 dark:bg-white/10">
             <div className="text-center">
-              <h2 className="font-display text-3xl font-bold tracking-tight sm:text-4xl text-slate-950 dark:text-white">
+              <h2 className="font-display text-3xl font-bold tracking-tight text-brand-950 dark:text-white sm:text-4xl">
                 How It Works
               </h2>
               <p className="mt-3 text-slate-600 dark:text-slate-300 max-w-xl mx-auto text-sm">
@@ -95,7 +98,7 @@ export default function Landing() {
             </div>
 
             <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-              <div className="rounded-3xl border border-slate-200 bg-slate-50 p-6 transition-all hover:-translate-y-1 dark:border-slate-800/60 dark:bg-slate-950/80">
+              <div className="rounded-3xl border border-brand-900/10 bg-white/75 p-6 shadow-sm shadow-brand-900/5 transition-all hover:-translate-y-1 dark:border-brand-400/20 dark:bg-white/10">
                 <div className="text-4xl">🛍️</div>
                 <h3 className="mt-4 font-display text-lg font-bold text-slate-900 dark:text-slate-100">1. Pick Products</h3>
                 <p className="mt-2 text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
@@ -103,7 +106,7 @@ export default function Landing() {
                 </p>
               </div>
 
-              <div className="rounded-3xl border border-slate-200 bg-slate-50 p-6 transition-all hover:-translate-y-1 dark:border-slate-800/60 dark:bg-slate-950/80">
+              <div className="rounded-3xl border border-brand-900/10 bg-white/75 p-6 shadow-sm shadow-brand-900/5 transition-all hover:-translate-y-1 dark:border-brand-400/20 dark:bg-white/10">
                 <div className="text-4xl">🎁</div>
                 <h3 className="mt-4 font-display text-lg font-bold text-slate-900 dark:text-slate-100">2. Build Your Box</h3>
                 <p className="mt-2 text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
@@ -111,7 +114,7 @@ export default function Landing() {
                 </p>
               </div>
 
-              <div className="rounded-3xl border border-slate-200 bg-slate-50 p-6 transition-all hover:-translate-y-1 dark:border-slate-800/60 dark:bg-slate-950/80">
+              <div className="rounded-3xl border border-brand-900/10 bg-white/75 p-6 shadow-sm shadow-brand-900/5 transition-all hover:-translate-y-1 dark:border-brand-400/20 dark:bg-white/10">
                 <div className="text-4xl">✍️</div>
                 <h3 className="mt-4 font-display text-lg font-bold text-slate-900 dark:text-slate-100">3. Personalize</h3>
                 <p className="mt-2 text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
@@ -119,7 +122,7 @@ export default function Landing() {
                 </p>
               </div>
 
-              <div className="rounded-3xl border border-slate-200 bg-slate-50 p-6 transition-all hover:-translate-y-1 dark:border-slate-800/60 dark:bg-slate-950/80">
+              <div className="rounded-3xl border border-brand-900/10 bg-white/75 p-6 shadow-sm shadow-brand-900/5 transition-all hover:-translate-y-1 dark:border-brand-400/20 dark:bg-white/10">
                 <div className="text-4xl">💬</div>
                 <h3 className="mt-4 font-display text-lg font-bold text-slate-900 dark:text-slate-100">4. Checkout</h3>
                 <p className="mt-2 text-xs text-slate-600 dark:text-slate-300 leading-relaxed">

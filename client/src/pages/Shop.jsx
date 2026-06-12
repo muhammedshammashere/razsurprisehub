@@ -53,7 +53,12 @@ export default function Shop() {
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
-      <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Shop Gifts</h1>
+      <div className="surface-gradient rounded-2xl border border-brand-900/10 px-5 py-6 shadow-lg shadow-brand-900/5 dark:border-brand-400/20 sm:px-6">
+        <p className="text-xs font-bold uppercase tracking-widest text-brand-600 dark:text-brand-300">
+          Curated collection
+        </p>
+        <h1 className="mt-2 text-3xl font-bold text-brand-950 dark:text-white">Shop Gifts</h1>
+      </div>
       <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex flex-wrap gap-2">
           <button
@@ -61,8 +66,8 @@ export default function Shop() {
             onClick={() => setSearchParams({})}
             className={`rounded-full px-4 py-1.5 text-sm font-medium transition-all duration-200 ${
               !category
-                ? 'bg-gradient-to-r from-brand-500 to-brand-600 text-white shadow-md shadow-brand-500/25 scale-105'
-                : 'bg-brand-50/50 hover:bg-brand-100 text-gray-700 border border-brand-100/50 dark:bg-brand-900/10 dark:text-brand-300 dark:border-brand-900/30 dark:hover:bg-brand-900/20'
+                ? 'brand-gradient text-white shadow-md shadow-brand-500/25 scale-105'
+                : 'border border-brand-900/10 bg-white/80 text-brand-900 hover:bg-brand-50 dark:border-brand-400/20 dark:bg-white/10 dark:text-brand-100 dark:hover:bg-white/20'
             }`}
           >
              All
@@ -74,8 +79,8 @@ export default function Shop() {
               onClick={() => setSearchParams({ category: cat })}
               className={`rounded-full px-4 py-1.5 text-sm font-medium transition-all duration-200 flex items-center gap-1.5 ${
                 category === cat
-                  ? 'bg-gradient-to-r from-brand-500 to-brand-600 text-white shadow-md shadow-brand-500/25 scale-105'
-                  : 'bg-brand-50/50 hover:bg-brand-100 text-gray-700 border border-brand-100/50 dark:bg-brand-900/10 dark:text-brand-300 dark:border-brand-900/30 dark:hover:bg-brand-900/20'
+                  ? 'brand-gradient text-white shadow-md shadow-brand-500/25 scale-105'
+                  : 'border border-brand-900/10 bg-white/80 text-brand-900 hover:bg-brand-50 dark:border-brand-400/20 dark:bg-white/10 dark:text-brand-100 dark:hover:bg-white/20'
               }`}
             >
               <span>{CATEGORY_EMOJIS[cat] || ''}</span>

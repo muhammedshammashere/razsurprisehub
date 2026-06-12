@@ -9,10 +9,10 @@ export default function ProductCard({ product, onAdd }) {
   const availableStock = getAvailableStock(product);
 
   return (
-    <article className="card group overflow-hidden p-0 transition-all duration-300 hover:shadow-xl hover:shadow-brand-500/5 hover:-translate-y-1">
+    <article className="card group overflow-hidden p-0 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-brand-900/10">
       <Link
         to={`/shop/${product._id}`}
-        className="flex h-56 items-center justify-center bg-brand-50/10 dark:bg-brand-950/20"
+        className="surface-gradient flex h-56 items-center justify-center border-b border-brand-900/10 dark:border-brand-400/15"
       >
         <img
           src={image}
@@ -21,7 +21,7 @@ export default function ProductCard({ product, onAdd }) {
         />
       </Link>
       <div className="p-4">
-        <span className="text-[10px] font-bold uppercase tracking-wider text-brand-500 bg-brand-50 dark:bg-brand-900/30 dark:text-brand-300 px-2 py-0.5 rounded flex items-center gap-1 w-fit">
+        <span className="flex w-fit items-center gap-1 rounded-full border border-brand-500/20 bg-brand-50/80 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-brand-900 dark:border-brand-400/20 dark:bg-white/10 dark:text-brand-200">
           <span>{CATEGORY_EMOJIS[product.category] || '🎁'}</span>
           <span>{product.category}</span>
         </span>

@@ -72,7 +72,7 @@ export default function ProductDetail() {
           <p className="mt-4 text-gray-600 dark:text-gray-300">{product.description}</p>
           <p className="mt-2 text-sm text-gray-500">Stock: {availableStock}</p>
           <div className="mt-8 flex items-center gap-4">
-            <div className="flex h-11 items-center overflow-hidden rounded-lg border border-slate-200 bg-white dark:border-slate-800/40 dark:bg-slate-950">
+            <div className="flex h-11 items-center overflow-hidden rounded-lg border border-brand-900/10 bg-white dark:border-brand-400/15 dark:bg-white/5">
               <button
                 type="button"
                 aria-label="Decrease quantity"
@@ -82,7 +82,7 @@ export default function ProductDetail() {
               >
                 -
               </button>
-              <span className="flex h-11 w-12 items-center justify-center border-x border-slate-200 text-sm font-semibold dark:border-slate-800/40">
+              <span className="flex h-11 w-12 items-center justify-center border-x border-brand-900/10 text-sm font-semibold dark:border-brand-400/15">
                 {qty}
               </span>
               <button

@@ -7,8 +7,8 @@ import ThemeToggle from './ThemeToggle';
 const linkClass = ({ isActive }) =>
   `text-sm font-medium transition-all duration-200 ${
     isActive
-      ? 'text-brand-500 dark:text-brand-400 font-semibold scale-105'
-      : 'text-gray-600 hover:text-brand-500 dark:text-gray-300 dark:hover:text-brand-400'
+      ? 'text-brand-500 dark:text-brand-300 font-semibold scale-105'
+      : 'text-gray-600 hover:text-brand-500 dark:text-gray-300 dark:hover:text-brand-300'
   }`;
 
 export default function Navbar() {
@@ -17,9 +17,10 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-brand-100/50 bg-white/90 backdrop-blur dark:border-slate-800/30 dark:bg-slate-950/95">
+    <header className="sticky top-0 z-40 border-b border-brand-900/10 bg-white/80 shadow-sm shadow-brand-900/5 backdrop-blur-xl dark:border-brand-400/20 dark:bg-brand-950/90">
+      <div className="h-0.5 w-full brand-gradient" />
       <nav className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6">
-        <Link to="/" className="font-display text-xl font-bold text-brand-500 hover:scale-[1.02] transition-transform dark:text-slate-100 shrink-0 flex items-center gap-1.5">
+        <Link to="/" className="font-display text-gradient text-xl font-bold hover:scale-[1.02] transition-transform shrink-0 flex items-center gap-1.5">
           
           <span>Raz Surprise Hub</span>
         </Link>
@@ -57,7 +58,7 @@ export default function Navbar() {
 
       {/* Mobile Menu Dropdown */}
       {isOpen && (
-        <div className="border-t border-brand-100/50 bg-white/95 px-6 py-4 shadow-lg dark:border-slate-800/30 dark:bg-slate-950/95 md:hidden flex flex-col gap-4 animate-fadeIn">
+        <div className="border-t border-brand-900/10 bg-white/95 px-6 py-4 shadow-lg dark:border-brand-400/20 dark:bg-brand-950/95 md:hidden flex flex-col gap-4 animate-fadeIn">
           <NavLink to="/shop" className={linkClass} onClick={() => setIsOpen(false)}>
             Shop
           </NavLink>
