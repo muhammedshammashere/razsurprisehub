@@ -25,6 +25,12 @@ export default function ProductDetail() {
 
   const availableStock = product ? getAvailableStock(product) : 0;
 
+  const setSafeQty = (nextQuantity) => {
+    const max = Math.max(availableStock, 1);
+    const quantity = Math.max(1, Math.min(Number(nextQuantity) || 1, max));
+    setQty(quantity);
+  };
+
   useEffect(() => {
     if (product && qty > availableStock) {
       setQty(Math.max(availableStock, 1));
@@ -66,15 +72,29 @@ export default function ProductDetail() {
           <p className="mt-4 text-gray-600 dark:text-gray-300">{product.description}</p>
           <p className="mt-2 text-sm text-gray-500">Stock: {availableStock}</p>
           <div className="mt-8 flex items-center gap-4">
-            <input
-              type="number"
-              min={1}
-              max={availableStock}
-              value={qty}
-              onChange={(e) => setQty(Number(e.target.value))}
-              className="input-field w-24"
-              disabled={availableStock < 1}
-            />
+            <div className="flex h-11 items-center overflow-hidden rounded-lg border border-slate-200 bg-white dark:border-slate-800/40 dark:bg-slate-950">
+              <button
+                type="button"
+                aria-label="Decrease quantity"
+                disabled={availableStock < 1 || qty <= 1}
+                onClick={() => setSafeQty(qty - 1)}
+                className="flex h-11 w-11 items-center justify-center text-lg font-semibold text-slate-700 transition hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-40 dark:text-slate-200 dark:hover:bg-slate-900"
+              >
+                -
+              </button>
+              <span className="flex h-11 w-12 items-center justify-center border-x border-slate-200 text-sm font-semibold dark:border-slate-800/40">
+                {qty}
+              </span>
+              <button
+                type="button"
+                aria-label="Increase quantity"
+                disabled={availableStock < 1 || qty >= availableStock}
+                onClick={() => setSafeQty(qty + 1)}
+                className="flex h-11 w-11 items-center justify-center text-lg font-semibold text-slate-700 transition hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-40 dark:text-slate-200 dark:hover:bg-slate-900"
+              >
+                +
+              </button>
+            </div>
             <button
               type="button"
               onClick={handleAdd}

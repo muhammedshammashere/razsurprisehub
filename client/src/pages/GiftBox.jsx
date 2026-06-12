@@ -8,6 +8,7 @@ export default function GiftBox() {
   const { giftBox, loading, fetchGiftBox, updateItem, removeItem, updateBox } = useGiftBox();
   const [message, setMessage] = useState('');
   const [deliveryDate, setDeliveryDate] = useState('');
+  const [updatingItemId, setUpdatingItemId] = useState(null);
 
   useEffect(() => {
     fetchGiftBox();
@@ -32,6 +33,16 @@ export default function GiftBox() {
     await updateBox({ personalizedMessage: message, deliveryDate });
   };
 
+  const updateQuantity = async (productId, nextQuantity, stock) => {
+    const quantity = Math.max(1, Math.min(Number(nextQuantity) || 1, stock || 1));
+    setUpdatingItemId(productId);
+    try {
+      await updateItem(productId, quantity);
+    } finally {
+      setUpdatingItemId(null);
+    }
+  };
+
   if (loading && !giftBox) return <Loader />;
 
   const items = giftBox?.items || [];
@@ -51,6 +62,7 @@ export default function GiftBox() {
           ) : (
             items.map((item) => {
               const p = item.product;
+              const isUpdating = updatingItemId === p._id;
               return (
                 <div key={p._id} className="card flex gap-4 flex-col sm:flex-row sm:items-center">
                   <div className="flex h-24 w-24 shrink-0 items-center justify-center rounded-lg bg-gray-50 p-2 dark:bg-gray-900">
@@ -63,17 +75,30 @@ export default function GiftBox() {
                   <div className="flex-1">
                     <h3 className="font-semibold">{p.name}</h3>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <input
-                      type="number"
-                      min={1}
-                      max={p.stock}
-                      value={item.quantity}
-                      onChange={async (e) => {
-                        await updateItem(p._id, Number(e.target.value));
-                      }}
-                      className="input-field w-20"
-                    />
+                  <div className="flex items-center gap-3">
+                    <div className="flex h-10 items-center overflow-hidden rounded-lg border border-slate-200 bg-white dark:border-slate-800/40 dark:bg-slate-950">
+                      <button
+                        type="button"
+                        aria-label={`Decrease ${p.name} quantity`}
+                        disabled={isUpdating || item.quantity <= 1}
+                        onClick={() => updateQuantity(p._id, item.quantity - 1, p.stock)}
+                        className="flex h-10 w-10 items-center justify-center text-lg font-semibold text-slate-700 transition hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-40 dark:text-slate-200 dark:hover:bg-slate-900"
+                      >
+                        -
+                      </button>
+                      <span className="flex h-10 w-12 items-center justify-center border-x border-slate-200 text-sm font-semibold dark:border-slate-800/40">
+                        {item.quantity}
+                      </span>
+                      <button
+                        type="button"
+                        aria-label={`Increase ${p.name} quantity`}
+                        disabled={isUpdating || item.quantity >= p.stock}
+                        onClick={() => updateQuantity(p._id, item.quantity + 1, p.stock)}
+                        className="flex h-10 w-10 items-center justify-center text-lg font-semibold text-slate-700 transition hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-40 dark:text-slate-200 dark:hover:bg-slate-900"
+                      >
+                        +
+                      </button>
+                    </div>
                     <button
                       type="button"
                       onClick={() => removeItem(p._id)}
