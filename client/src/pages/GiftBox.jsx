@@ -153,7 +153,7 @@ export default function GiftBox() {
           <div>
             <label className="mb-1 block text-sm font-medium">Personalized message</label>
             <textarea
-              className="input-field min-h-[100px]"
+              className="input-field min-h-[100px] dark:placeholder-white"
               maxLength={500}
               value={message}
               onChange={(e) => setMessage(e.target.value)}
