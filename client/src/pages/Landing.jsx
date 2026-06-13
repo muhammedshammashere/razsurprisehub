@@ -38,12 +38,9 @@ export default function Landing() {
             Mix chocolates, flowers, cards, teddy bears, perfumes and custom gifts. Add a personal
             message, pick a delivery date, and checkout securely via WhatsApp.
           </p>
-          <div className="mt-10 flex flex-wrap justify-center gap-4">
-            <Link to="/gift-box" className="btn-primary text-lg px-8 py-3 shadow-lg hover:shadow-brand-500/20 hover:scale-[1.03] transition-transform">
+          <div className="mt-10 flex justify-center">
+            <Link to="/shop" className="btn-primary text-lg px-8 py-3 shadow-lg hover:shadow-brand-500/20 hover:scale-[1.03] transition-transform">
               Start Building 
-            </Link>
-            <Link to="/shop" className="btn-secondary text-lg px-8 py-3 hover:scale-[1.03] transition-transform">
-              Browse Shop 
             </Link>
           </div>
         </div>
