@@ -237,37 +237,50 @@ html:not(.dark) .review-marquee-fade--right {
 
 .party-popper {
   position: absolute;
-  bottom: 12%;
-  width: 0;
-  height: 0;
-  border-top: 2.4rem solid transparent;
-  border-bottom: 2.4rem solid transparent;
+  bottom: clamp(1.5rem, 8vh, 5rem);
+  width: clamp(4.25rem, 10vw, 6.25rem);
+  height: clamp(3rem, 7vw, 4.5rem);
+  border: 1px solid rgb(255 255 255 / 0.24);
+  border-radius: 0.75rem 0.3rem 0.3rem 0.75rem;
+  background:
+    repeating-linear-gradient(135deg, #ec407a 0 0.75rem, #facc15 0.75rem 1.5rem, #38bdf8 1.5rem 2.25rem, #ffffff 2.25rem 3rem);
+  clip-path: polygon(0 50%, 100% 0, 100% 100%);
   opacity: 0;
   filter: drop-shadow(0 12px 28px rgb(0 0 0 / 0.28));
-  animation: party-popper 2.6s ease-out forwards;
+  animation: party-popper 3s ease-out forwards;
 }
 
 .party-popper--left {
-  left: clamp(0.75rem, 3vw, 2.5rem);
-  border-left: 4.5rem solid #ec407a;
-  transform: rotate(-18deg);
+  left: clamp(0.75rem, 4vw, 3rem);
+  transform: rotate(-24deg);
 }
 
 .party-popper--right {
-  right: clamp(0.75rem, 3vw, 2.5rem);
-  border-right: 4.5rem solid #ec407a;
-  transform: rotate(18deg);
+  right: clamp(0.75rem, 4vw, 3rem);
+  transform: scaleX(-1) rotate(-24deg);
+}
+
+.party-popper::after {
+  content: '';
+  position: absolute;
+  left: 0.45rem;
+  top: 50%;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 9999px;
+  background: rgb(80 0 80 / 0.76);
+  transform: translateY(-50%);
 }
 
 .celebration-center-burst {
   position: absolute;
   left: 50%;
-  top: 28%;
+  top: 24%;
   display: grid;
-  min-width: min(18rem, 72vw);
-  min-height: min(18rem, 72vw);
+  min-width: min(22rem, 82vw);
+  min-height: min(17rem, 68vw);
   place-items: center;
-  border-radius: 9999px;
+  border-radius: 2rem;
   color: white;
   opacity: 0;
   transform: translate(-50%, -50%) scale(0.72);
@@ -281,14 +294,62 @@ html:not(.dark) .review-marquee-fade--right {
 
 .celebration-center-burst span {
   border: 1px solid rgb(255 255 255 / 0.28);
-  border-radius: 9999px;
-  background: linear-gradient(135deg, rgb(80 0 80 / 0.88), rgb(236 64 122 / 0.88));
-  padding: 0.7rem 1.25rem;
+  border-radius: 1.25rem;
+  background:
+    linear-gradient(135deg, rgb(80 0 80 / 0.92), rgb(236 64 122 / 0.9)),
+    var(--sv-gradient);
+  padding: 0.8rem 1.35rem;
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: clamp(1.15rem, 4vw, 2rem);
+  font-size: clamp(1.15rem, 5vw, 2.35rem);
   font-weight: 800;
   letter-spacing: 0;
   box-shadow: 0 18px 38px rgb(80 0 80 / 0.28);
+}
+
+.birthday-balloon {
+  position: absolute;
+  bottom: -7rem;
+  width: clamp(2rem, 5.5vw, 3.2rem);
+  height: clamp(2.55rem, 7vw, 4.1rem);
+  border-radius: 9999px 9999px 850px 850px;
+  background:
+    radial-gradient(circle at 35% 28%, rgb(255 255 255 / 0.72), transparent 18%),
+    var(--balloon-color);
+  box-shadow: 0 16px 28px rgb(0 0 0 / 0.22);
+  opacity: 0;
+  animation: birthday-balloon 3.8s ease-out var(--balloon-delay) forwards;
+}
+
+.birthday-balloon::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -0.35rem;
+  width: 0;
+  height: 0;
+  border-left: 0.34rem solid transparent;
+  border-right: 0.34rem solid transparent;
+  border-top: 0.58rem solid var(--balloon-color);
+  transform: translateX(-50%);
+}
+
+.birthday-balloon::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: calc(100% + 0.15rem);
+  width: 1px;
+  height: clamp(2.5rem, 7vw, 4rem);
+  background: rgb(255 255 255 / 0.56);
+  transform: translateX(-50%);
+}
+
+.birthday-balloon--left {
+  left: var(--balloon-x);
+}
+
+.birthday-balloon--right {
+  right: var(--balloon-x);
 }
 
 .celebration-piece {
@@ -381,6 +442,23 @@ html:not(.dark) .review-marquee-fade--right {
   }
 }
 
+@keyframes birthday-balloon {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) rotate(-4deg);
+  }
+  14% {
+    opacity: 1;
+  }
+  76% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(0, -72vh, 0) rotate(5deg);
+  }
+}
+
 @keyframes celebration-burst {
   0% {
     opacity: 0;
@@ -405,17 +483,7 @@ html:not(.dark) .review-marquee-fade--right {
   }
 
   .party-popper {
-    bottom: 12%;
-    border-top-width: 1.75rem;
-    border-bottom-width: 1.75rem;
-  }
-
-  .party-popper--left {
-    border-left-width: 3.4rem;
-  }
-
-  .party-popper--right {
-    border-right-width: 3.4rem;
+    bottom: 1.25rem;
   }
 }
 
@@ -426,7 +494,8 @@ html:not(.dark) .review-marquee-fade--right {
 
   .celebration-piece,
   .celebration-glow,
-  .party-popper {
+  .party-popper,
+  .birthday-balloon {
     display: none;
   }
 

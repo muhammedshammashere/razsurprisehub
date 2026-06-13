@@ -12,12 +12,12 @@ export default function ProductCard({ product, onAdd }) {
     <article className="card group overflow-hidden p-0 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-brand-900/10">
       <Link
         to={`/shop/${product._id}`}
-        className="surface-gradient flex h-56 items-center justify-center border-b border-brand-900/10 dark:border-brand-400/15"
+        className="surface-gradient flex h-56 items-center justify-center overflow-hidden border-b border-brand-900/10 dark:border-brand-400/15"
       >
         <img
           src={image}
           alt={product.name}
-          className="h-full w-full object-contain p-3 transition-transform duration-500 group-hover:scale-105"
+          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
       </Link>
       <div className="p-4">
