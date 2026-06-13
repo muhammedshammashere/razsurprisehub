@@ -40,7 +40,7 @@ export default function Landing() {
           </p>
           <div className="mt-10 flex justify-center">
             <Link to="/shop" className="btn-primary text-lg px-8 py-3 shadow-lg hover:shadow-brand-500/20 hover:scale-[1.03] transition-transform">
-              Start Building 
+              Customise on your own 
             </Link>
           </div>
         </div>
