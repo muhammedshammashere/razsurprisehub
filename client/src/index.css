@@ -201,3 +201,237 @@ html:not(.dark) .review-marquee-fade--right {
   background: linear-gradient(to left, white, rgb(255 255 255 / 0.9), transparent);
 }
 
+.session-celebration {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  overflow: hidden;
+  animation: celebration-overlay 3.8s ease forwards;
+  contain: layout paint;
+  isolation: isolate;
+}
+
+.celebration-glow {
+  position: absolute;
+  top: 18%;
+  width: min(34rem, 62vw);
+  aspect-ratio: 1;
+  border-radius: 9999px;
+  opacity: 0.62;
+  filter: blur(46px);
+  background:
+    radial-gradient(circle, rgb(236 64 122 / 0.48), transparent 58%),
+    radial-gradient(circle at 70% 30%, rgb(250 204 21 / 0.34), transparent 46%);
+  animation: celebration-glow 3.4s ease-out forwards;
+}
+
+.celebration-glow--left {
+  left: -18rem;
+}
+
+.celebration-glow--right {
+  right: -18rem;
+  transform: scaleX(-1);
+}
+
+.party-popper {
+  position: absolute;
+  bottom: 12%;
+  width: 0;
+  height: 0;
+  border-top: 2.4rem solid transparent;
+  border-bottom: 2.4rem solid transparent;
+  opacity: 0;
+  filter: drop-shadow(0 12px 28px rgb(0 0 0 / 0.28));
+  animation: party-popper 2.6s ease-out forwards;
+}
+
+.party-popper--left {
+  left: clamp(0.75rem, 3vw, 2.5rem);
+  border-left: 4.5rem solid #ec407a;
+  transform: rotate(-18deg);
+}
+
+.party-popper--right {
+  right: clamp(0.75rem, 3vw, 2.5rem);
+  border-right: 4.5rem solid #ec407a;
+  transform: rotate(18deg);
+}
+
+.celebration-center-burst {
+  position: absolute;
+  left: 50%;
+  top: 28%;
+  display: grid;
+  min-width: min(18rem, 72vw);
+  min-height: min(18rem, 72vw);
+  place-items: center;
+  border-radius: 9999px;
+  color: white;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.72);
+  background:
+    radial-gradient(circle, rgb(236 64 122 / 0.42), transparent 58%),
+    radial-gradient(circle at 70% 28%, rgb(250 204 21 / 0.32), transparent 34%),
+    radial-gradient(circle at 25% 72%, rgb(56 189 248 / 0.25), transparent 38%);
+  filter: drop-shadow(0 22px 42px rgb(0 0 0 / 0.28));
+  animation: celebration-center-burst 3.3s ease forwards;
+}
+
+.celebration-center-burst span {
+  border: 1px solid rgb(255 255 255 / 0.28);
+  border-radius: 9999px;
+  background: linear-gradient(135deg, rgb(80 0 80 / 0.88), rgb(236 64 122 / 0.88));
+  padding: 0.7rem 1.25rem;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: clamp(1.15rem, 4vw, 2rem);
+  font-weight: 800;
+  letter-spacing: 0;
+  box-shadow: 0 18px 38px rgb(80 0 80 / 0.28);
+}
+
+.celebration-piece {
+  position: absolute;
+  top: var(--start-y);
+  width: calc(var(--size) * 1.15);
+  height: calc(var(--size) * 1.95);
+  border-radius: 0.125rem;
+  background: var(--color);
+  box-shadow: 0 0 14px color-mix(in srgb, var(--color) 58%, transparent);
+  opacity: 0;
+  will-change: transform, opacity;
+  animation: celebration-burst var(--duration) cubic-bezier(0.17, 0.84, 0.32, 1) var(--delay) forwards;
+}
+
+.celebration-piece--left {
+  left: -1.5rem;
+}
+
+.celebration-piece--right {
+  right: -1.5rem;
+}
+
+.celebration-piece--circle {
+  height: var(--size);
+  border-radius: 9999px;
+}
+
+.celebration-piece--streamer {
+  width: calc(var(--size) * 0.72);
+  height: calc(var(--size) * 4.4);
+  border-radius: 9999px;
+  background:
+    linear-gradient(135deg, transparent 0 18%, var(--color) 18% 42%, transparent 42% 58%, var(--color) 58% 82%, transparent 82%),
+    rgb(255 255 255 / 0.16);
+}
+
+@keyframes celebration-overlay {
+  0%,
+  76% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes celebration-glow {
+  0% {
+    transform: scale(0.6);
+  }
+  38% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.16);
+    opacity: 0;
+  }
+}
+
+@keyframes celebration-center-burst {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.72);
+  }
+  14%,
+  64% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.08);
+  }
+}
+
+@keyframes party-popper {
+  0% {
+    opacity: 0;
+    scale: 0.72;
+  }
+  16%,
+  62% {
+    opacity: 1;
+    scale: 1;
+  }
+  100% {
+    opacity: 0;
+    scale: 0.96;
+  }
+}
+
+@keyframes celebration-burst {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(0.6);
+  }
+  10% {
+    opacity: 1;
+  }
+  72% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(var(--tx), var(--ty), 0) rotate(var(--spin)) scale(1);
+  }
+}
+
+@media (max-width: 640px) {
+  .celebration-piece {
+    width: calc(var(--size) * 0.86);
+    height: calc(var(--size) * 1.45);
+  }
+
+  .party-popper {
+    bottom: 12%;
+    border-top-width: 1.75rem;
+    border-bottom-width: 1.75rem;
+  }
+
+  .party-popper--left {
+    border-left-width: 3.4rem;
+  }
+
+  .party-popper--right {
+    border-right-width: 3.4rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .session-celebration {
+    animation-duration: 2.4s;
+  }
+
+  .celebration-piece,
+  .celebration-glow,
+  .party-popper {
+    display: none;
+  }
+
+  .celebration-center-burst {
+    animation-duration: 2.2s;
+  }
+}
+

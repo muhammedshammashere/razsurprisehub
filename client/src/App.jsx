@@ -4,6 +4,7 @@ import { AuthProvider } from './context/AuthContext';
 import { ThemeProvider } from './context/ThemeContext';
 import { GiftBoxProvider } from './context/GiftBoxContext';
 import AppRoutes from './routes/AppRoutes';
+import SessionCelebration from './components/ui/SessionCelebration';
 
 export default function App() {
   return (
@@ -11,6 +12,7 @@ export default function App() {
       <ThemeProvider>
         <AuthProvider>
           <GiftBoxProvider>
+            <SessionCelebration />
             <AppRoutes />
             <Toaster position="top-right" />
           </GiftBoxProvider>
