@@ -24,7 +24,10 @@ const applyTheme = (theme) => {
 };
 
 export const ThemeProvider = ({ children }) => {
-  const [theme, setTheme] = useState(getInitialTheme);
+  const [theme, setTheme] = useState(() => {
+    if (typeof window === 'undefined') return 'dark';
+    return localStorage.getItem('sv_theme') || 'dark';
+  });
 
   useEffect(() => {
     applyTheme(theme);

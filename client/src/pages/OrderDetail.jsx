@@ -19,6 +19,22 @@ export default function OrderDetail() {
 
   const currentIndex = STEPS.indexOf(order.status === 'cancelled' ? 'pending' : order.status);
 
+  const getWhatsAppUrl = () => {
+    if (!order) return '';
+    const itemsText = order.items
+      .map((item) => `- ${item.name} (Qty: ${item.quantity})`)
+      .join('\n');
+    const messageText = `Hello! I would like to place/confirm my order.
+
+*Order Number:* ${order.orderNumber}
+*Delivery Date:* ${new Date(order.deliveryDate).toLocaleDateString()}
+*Personalized Message:* ${order.personalizedMessage ? `"${order.personalizedMessage}"` : 'None'}
+
+*Items:*
+${itemsText}`;
+    return `https://wa.me/7907549067?text=${encodeURIComponent(messageText)}`;
+  };
+
   return (
     <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6">
       <Link to="/orders" className="text-sm text-brand-600 hover:underline">
@@ -39,9 +55,8 @@ export default function OrderDetail() {
             {STEPS.map((step, i) => (
               <div key={step} className="flex flex-col items-center flex-1">
                 <div
-                  className={`h-8 w-8 rounded-full flex items-center justify-center text-xs font-bold ${
-                    i <= currentIndex ? 'bg-brand-600 text-white' : 'bg-gray-200 dark:bg-gray-700'
-                  }`}
+                  className={`h-8 w-8 rounded-full flex items-center justify-center text-xs font-bold ${i <= currentIndex ? 'bg-brand-600 text-white' : 'bg-gray-200 dark:bg-gray-700'
+                    }`}
                 >
                   {i + 1}
                 </div>
@@ -72,6 +87,21 @@ export default function OrderDetail() {
         <p className="mt-4 text-sm text-gray-500 dark:text-gray-400">
           Delivery: {new Date(order.deliveryDate).toLocaleDateString()}
         </p>
+
+        {/* WhatsApp Manual Fallback Link */}
+        <div className="mt-8 pt-6 border-t border-brand-900/10 dark:border-brand-900/25 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <p className="text-xs text-gray-500">
+            Automatic redirect blocked? Use this button to complete payment and confirm details on WhatsApp.
+          </p>
+          <a
+            href={getWhatsAppUrl()}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-primary flex items-center justify-center gap-2 whitespace-nowrap text-sm"
+          >
+            💬 Confirm via WhatsApp
+          </a>
+        </div>
       </div>
     </div>
   );
