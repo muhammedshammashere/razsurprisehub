@@ -9,7 +9,6 @@ import giftBoxRoutes from './routes/giftBox.routes.js';
 import orderRoutes from './routes/order.routes.js';
 import paymentRoutes from './routes/payment.routes.js';
 import adminRoutes from './routes/admin.routes.js';
-import reviewRoutes from './routes/review.routes.js';
 import { notFound, errorHandler } from './middleware/error.middleware.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -38,7 +37,6 @@ app.use('/api/gift-box', giftBoxRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/payments', paymentRoutes);
 app.use('/api/admin', adminRoutes);
-app.use('/api/reviews', reviewRoutes);
 
 app.use(notFound);
 app.use(errorHandler);

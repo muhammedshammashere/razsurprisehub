@@ -1,11 +1,8 @@
-import api from '../api/axios';
-
-const DEV_API_BASE = 'http://localhost:5000/api';
+export const REVIEWS_STORAGE_KEY = 'sv_reviews';
 
 export const DEFAULT_REVIEWS = [
   {
     id: 'default-priya',
-    _id: 'default-priya',
     name: 'Priya S.',
     rating: 5,
     text: 'The gift box looked beautiful and arrived right on time.',
@@ -13,7 +10,6 @@ export const DEFAULT_REVIEWS = [
   },
   {
     id: 'default-arjun',
-    _id: 'default-arjun',
     name: 'Arjun M.',
     rating: 5,
     text: 'Easy to customize, and the packaging felt really premium.',
@@ -21,81 +17,116 @@ export const DEFAULT_REVIEWS = [
   },
   {
     id: 'default-neha',
-    _id: 'default-neha',
     name: 'Neha K.',
     rating: 4,
     text: 'Perfect for a last-minute surprise that still felt personal.',
     createdAt: '2026-06-03T10:00:00.000Z',
   },
+  {
+    id: 'default-fathima',
+    name: 'Fathima R.',
+    rating: 5,
+    text: 'The birthday box was packed so neatly. The chocolates and teddy made it feel extra special.',
+    createdAt: '2026-06-04T10:00:00.000Z',
+  },
+  {
+    id: 'default-vishnu',
+    name: 'Vishnu P.',
+    rating: 4,
+    text: 'Good selection of gifts and the WhatsApp checkout was very simple.',
+    createdAt: '2026-06-05T10:00:00.000Z',
+  },
+  {
+    id: 'default-aisha',
+    name: 'Aisha M.',
+    rating: 5,
+    text: 'Loved the custom message option. It made the gift feel thoughtful and personal.',
+    createdAt: '2026-06-06T10:00:00.000Z',
+  },
+  {
+    id: 'default-rahul',
+    name: 'Rahul N.',
+    rating: 4,
+    text: 'Nice experience overall. I would like to see more perfume options, but the box looked premium.',
+    createdAt: '2026-06-07T10:00:00.000Z',
+  },
+  {
+    id: 'default-meera',
+    name: 'Meera J.',
+    rating: 5,
+    text: 'The flowers and card combo was beautiful. My sister absolutely loved the surprise.',
+    createdAt: '2026-06-08T10:00:00.000Z',
+  },
+  {
+    id: 'default-adil',
+    name: 'Adil C.',
+    rating: 3,
+    text: 'The gift was good and easy to order. Delivery timing could be clearer, but support was helpful.',
+    createdAt: '2026-06-09T10:00:00.000Z',
+  },
+  {
+    id: 'default-sneha',
+    name: 'Sneha V.',
+    rating: 5,
+    text: 'Very cute packaging. It looked much better than a regular gift hamper.',
+    createdAt: '2026-06-10T10:00:00.000Z',
+  },
+  {
+    id: 'default-nikhil',
+    name: 'Nikhil T.',
+    rating: 4,
+    text: 'Simple to build a box and the categories made choosing items quick.',
+    createdAt: '2026-06-11T10:00:00.000Z',
+  },
 ];
 
-const normalizeReview = (review) => ({
-  ...review,
-  id: review._id || review.id,
-});
+const isValidReview = (review) =>
+  review &&
+  typeof review.name === 'string' &&
+  typeof review.text === 'string' &&
+  Number.isFinite(Number(review.rating));
 
-const shouldRetryWithDevServer = (error) =>
-  import.meta.env.DEV && error.message?.includes('Not found - /api/reviews');
+const withStableIds = (reviews) =>
+  reviews.map((review, index) => ({
+    ...review,
+    id: review.id || `review-${index}-${review.name.replace(/\s+/g, '-').toLowerCase()}`,
+  }));
 
-const requestReviewsFromDevServer = async (path = '/reviews', options = {}) => {
-  const token = localStorage.getItem('sv_token');
-  const response = await fetch(`${DEV_API_BASE}${path}`, {
-    ...options,
-    headers: {
-      'Content-Type': 'application/json',
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
-      ...options.headers,
-    },
-  });
+export const getReviews = () => {
+  if (typeof window === 'undefined') return withStableIds(DEFAULT_REVIEWS);
 
-  const data = await response.json().catch(() => ({}));
-  if (!response.ok) throw new Error(data.message || 'Request failed');
-  return data;
-};
-
-export const fetchReviews = async ({ fallbackToDefaults = true } = {}) => {
   try {
-    const { data } = await api.get('/reviews');
-    const reviews = Array.isArray(data.reviews) ? data.reviews.map(normalizeReview) : [];
-    return reviews.length || !fallbackToDefaults ? reviews : DEFAULT_REVIEWS;
-  } catch (error) {
-    if (shouldRetryWithDevServer(error)) {
-      const data = await requestReviewsFromDevServer('/reviews');
-      const reviews = Array.isArray(data.reviews) ? data.reviews.map(normalizeReview) : [];
-      return reviews.length || !fallbackToDefaults ? reviews : DEFAULT_REVIEWS;
+    const raw = localStorage.getItem(REVIEWS_STORAGE_KEY);
+    if (raw === null) return withStableIds(DEFAULT_REVIEWS);
+
+    const savedReviews = JSON.parse(raw);
+    if (!Array.isArray(savedReviews) || !savedReviews.every(isValidReview)) {
+      return withStableIds(DEFAULT_REVIEWS);
     }
 
-    if (fallbackToDefaults) return DEFAULT_REVIEWS;
-    throw error;
+    return withStableIds(savedReviews);
+  } catch {
+    return withStableIds(DEFAULT_REVIEWS);
   }
 };
 
-export const createReview = async ({ name, rating, text }) => {
-  try {
-    const { data } = await api.post('/reviews', { name, rating, text });
-    return normalizeReview(data.review);
-  } catch (error) {
-    if (shouldRetryWithDevServer(error)) {
-      const data = await requestReviewsFromDevServer('/reviews', {
-        method: 'POST',
-        body: JSON.stringify({ name, rating, text }),
-      });
-      return normalizeReview(data.review);
-    }
+export const saveReviews = (reviews) => {
+  if (typeof window === 'undefined') return;
 
-    throw error;
-  }
+  localStorage.setItem(REVIEWS_STORAGE_KEY, JSON.stringify(reviews));
+  window.dispatchEvent(new CustomEvent('sv:reviews-updated', { detail: reviews }));
 };
 
-export const deleteReview = async (reviewId) => {
-  try {
-    await api.delete(`/reviews/${reviewId}`);
-  } catch (error) {
-    if (shouldRetryWithDevServer(error)) {
-      await requestReviewsFromDevServer(`/reviews/${reviewId}`, { method: 'DELETE' });
-      return;
-    }
+export const deleteReview = (reviewId) => {
+  const nextReviews = getReviews().filter((review) => review.id !== reviewId);
+  saveReviews(nextReviews);
+  return nextReviews;
+};
 
-    throw error;
-  }
+export const updateReview = (reviewId, updates) => {
+  const nextReviews = getReviews().map((review) =>
+    review.id === reviewId ? { ...review, ...updates } : review
+  );
+  saveReviews(nextReviews);
+  return nextReviews;
 };

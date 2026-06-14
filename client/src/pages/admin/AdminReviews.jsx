@@ -1,8 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
-import { deleteReview, fetchReviews } from '../../utils/reviews';
-import Loader from '../../components/ui/Loader';
+import { deleteReview, getReviews } from '../../utils/reviews';
 
 function Stars({ rating }) {
   return (
@@ -37,24 +36,17 @@ function TrashIcon() {
 }
 
 export default function AdminReviews() {
-  const [reviews, setReviews] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [reviews, setReviews] = useState(getReviews);
   const [deletingId, setDeletingId] = useState(null);
 
   useEffect(() => {
-    let isMounted = true;
+    const syncReviews = () => setReviews(getReviews());
 
-    fetchReviews({ fallbackToDefaults: false })
-      .then((nextReviews) => {
-        if (isMounted) setReviews(nextReviews);
-      })
-      .catch((error) => toast.error(error.message || 'Failed to load reviews'))
-      .finally(() => {
-        if (isMounted) setLoading(false);
-      });
-
+    window.addEventListener('storage', syncReviews);
+    window.addEventListener('sv:reviews-updated', syncReviews);
     return () => {
-      isMounted = false;
+      window.removeEventListener('storage', syncReviews);
+      window.removeEventListener('sv:reviews-updated', syncReviews);
     };
   }, []);
 
@@ -64,7 +56,7 @@ export default function AdminReviews() {
   }, [reviews]);
 
   const handleDelete = async (review) => {
-    const reviewId = review._id || review.id;
+    const reviewId = review.id;
     if (!reviewId) {
       toast.error('Cannot delete this review');
       return;
@@ -74,19 +66,15 @@ export default function AdminReviews() {
 
     setDeletingId(reviewId);
     try {
-      await deleteReview(reviewId);
-      setReviews((currentReviews) =>
-        currentReviews.filter((currentReview) => (currentReview._id || currentReview.id) !== reviewId)
-      );
+      const nextReviews = deleteReview(reviewId);
+      setReviews(nextReviews);
       toast.success('Review deleted');
-    } catch (error) {
-      toast.error(error.message || 'Failed to delete review');
+    } catch {
+      toast.error('Failed to delete review');
     } finally {
       setDeletingId(null);
     }
   };
-
-  if (loading) return <Loader />;
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
@@ -149,7 +137,7 @@ export default function AdminReviews() {
               <tbody>
                 {reviews.map((review) => (
                   <tr
-                    key={review._id || review.id}
+                    key={review.id}
                     className="border-b border-slate-100 last:border-0 dark:border-slate-800"
                   >
                     <td className="px-6 py-4 font-medium text-slate-950 dark:text-white">
@@ -164,18 +152,18 @@ export default function AdminReviews() {
                     <td className="px-6 py-4 whitespace-nowrap text-slate-500 dark:text-slate-400">
                       {review.createdAt
                         ? new Date(review.createdAt).toLocaleDateString()
-                        : '—'}
+                        : '-'}
                     </td>
                     <td className="px-6 py-4 text-right">
                       <button
                         type="button"
                         onClick={() => handleDelete(review)}
-                        disabled={deletingId === (review._id || review.id)}
+                        disabled={deletingId === review.id}
                         className="inline-flex items-center gap-2 rounded-lg bg-red-600 px-3 py-2 text-xs font-semibold text-white transition hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-60"
                         aria-label={`Delete review from ${review.name}`}
                       >
                         <TrashIcon />
-                        {deletingId === (review._id || review.id) ? 'Deleting...' : 'Delete review'}
+                        {deletingId === review.id ? 'Deleting...' : 'Delete review'}
                       </button>
                     </td>
                   </tr>
