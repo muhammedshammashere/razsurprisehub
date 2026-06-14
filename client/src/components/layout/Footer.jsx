@@ -57,6 +57,11 @@ export default function Footer() {
                 </a>
               </li>
               <li>
+                <a href="https://www.instagram.com/riyadh_surprise_gifts?igsh=MWd1c2J1YzV4Z3RlMQ==" target="_blank" rel="noopener noreferrer" className="hover:text-brand-500 transition-colors flex items-center gap-1.5">
+                  📸 Instagram: @riyadh_surprise_gifts
+                </a>
+              </li>
+              <li>
                 <span className="flex items-center gap-1.5">
                   ✉️ support@razsurprisehub.com
                 </span>
