@@ -91,11 +91,11 @@ export default function Footer() {
             <ul className="space-y-2 text-xs leading-relaxed">
               <li>
                 <span className="font-medium text-slate-900 dark:text-slate-200">Support Hours:</span>
-                <span className="block text-[11px]">Daily 9:00 AM - 9:00 PM</span>
+                <span className="block text-[11px]">Open 24 hours</span>
               </li>
               <li>
-                <span className="font-medium text-slate-900 dark:text-slate-200">Delivery Days:</span>
-                <span className="block text-[11px]">All 7 days a week</span>
+                <span className="font-medium text-slate-900 dark:text-slate-200">Delivery:</span>
+                <span className="block text-[11px]">Delivery all over saudi arabia</span>
               </li>
               <li>
                 <span className="block text-[11px]">Calicut, Kerala, India</span>
