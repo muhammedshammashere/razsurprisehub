@@ -43,7 +43,7 @@ export default function Navbar() {
   const headerClass = [
     'sticky top-0 z-40 transition-[background-color,border-color,box-shadow,backdrop-filter] duration-300 ease-out',
     isScrolled
-      ? 'border-b border-brand-900/10 bg-white/75 shadow-lg shadow-brand-900/10 backdrop-blur-lg dark:border-brand-400/20 dark:bg-brand-950/70 dark:shadow-black/30'
+      ? 'border-b border-brand-900/10 bg-brand-50/75 shadow-lg shadow-brand-900/10 backdrop-blur-lg dark:border-brand-400/20 dark:bg-brand-950/70 dark:shadow-black/30'
       : 'border-b border-transparent bg-transparent shadow-none backdrop-blur-0',
   ].join(' ');
 
@@ -93,7 +93,7 @@ export default function Navbar() {
 
       {/* Mobile Menu Dropdown */}
       {isOpen && (
-        <div id="mobile-navigation" className="flex flex-col gap-4 border-t border-brand-900/10 bg-white/90 px-6 py-4 shadow-lg shadow-brand-900/10 backdrop-blur-lg dark:border-brand-400/20 dark:bg-brand-950/85 dark:shadow-black/30 md:hidden">
+        <div id="mobile-navigation" className="flex flex-col gap-4 border-t border-brand-900/10 bg-brand-50/90 px-6 py-4 shadow-lg shadow-brand-900/10 backdrop-blur-lg dark:border-brand-400/20 dark:bg-brand-950/85 dark:shadow-black/30 md:hidden">
           <NavLink to="/shop" className={linkClass} onClick={() => setIsOpen(false)}>
             Shop
           </NavLink>
