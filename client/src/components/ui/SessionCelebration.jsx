@@ -38,11 +38,11 @@ const BALLOONS = [
 export default function SessionCelebration() {
   const { pathname } = useLocation();
   const [isVisible, setIsVisible] = useState(false);
-  const pieces = useMemo(() => buildPieces(110), []);
-  const isAdminPage = pathname.startsWith('/admin');
+  const pieces = useMemo(() => buildPieces(130), []);
+  const isLandingPage = pathname === '/';
 
   useEffect(() => {
-    if (isAdminPage) {
+    if (!isLandingPage) {
       setIsVisible(false);
       return undefined;
     }
@@ -51,9 +51,9 @@ export default function SessionCelebration() {
 
     const hideTimer = window.setTimeout(() => setIsVisible(false), 3800);
     return () => window.clearTimeout(hideTimer);
-  }, [isAdminPage]);
+  }, [isLandingPage]);
 
-  if (isAdminPage || !isVisible) return null;
+  if (!isLandingPage || !isVisible) return null;
 
   return (
     <div className="session-celebration" aria-hidden="true">
@@ -61,9 +61,6 @@ export default function SessionCelebration() {
       <div className="celebration-glow celebration-glow--right" />
       <div className="party-popper party-popper--left" />
       <div className="party-popper party-popper--right" />
-      <div className="celebration-center-burst">
-        <span>Happy Birthday!</span>
-      </div>
       {BALLOONS.map((balloon) => (
         <span
           key={balloon.id}
