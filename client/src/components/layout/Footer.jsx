@@ -40,17 +40,17 @@ export default function Footer() {
             <ul className="space-y-2 text-xs">
               <li>
                 <Link to="/shop" className="transition-colors hover:text-brand-500">
-                  Shop Gifts
+                 🛒Shop Gifts
                 </Link>
               </li>
               <li>
                 <Link to="/gift-box" className="transition-colors hover:text-brand-500">
-                  Gift Box Builder
+                  🎁Gift Box Builder
                 </Link>
               </li>
               <li>
                 <Link to="/orders" className="transition-colors hover:text-brand-500">
-                  Order History
+                  📦Order History
                 </Link>
               </li>
             </ul>
@@ -63,7 +63,7 @@ export default function Footer() {
             <ul className="space-y-2 text-xs">
               <li>
                 <a href="tel:+917907549067" className="flex items-center gap-1.5 transition-colors hover:text-brand-500">
-                  <span>+91 79075 49067</span>
+                  <span>📞+91 79075 49067</span>
                 </a>
               </li>
               <li>
@@ -75,11 +75,12 @@ export default function Footer() {
               <li>
                 <a href="https://www.instagram.com/riyadh_surprise_gifts?igsh=MWd1c2J1YzV4Z3RlMQ==" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 transition-colors hover:text-brand-500">
                   <InstagramIcon className="h-3.5 w-3.5 text-pink-500" />
-                  <span>Instagram: @riyadh_surprise_gifts</span>
+                  <span>@riyadh_surprise_gifts</span>
                 </a>
               </li>
               <li>
-                <span>support@razsurprisehub.com</span>
+  
+                <span>📧support@razsurprisehub.com</span>
               </li>
             </ul>
           </div>
