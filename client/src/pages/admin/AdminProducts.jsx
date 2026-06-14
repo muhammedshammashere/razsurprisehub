@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import api from '../../api/axios';
 import Loader from '../../components/ui/Loader';
@@ -142,21 +143,26 @@ export default function AdminProducts() {
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
-      <div className="flex items-center justify-between border-b pb-5 dark:border-gray-800">
+      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200 pb-5 dark:border-slate-800">
         <h1 className="text-3xl font-bold">Manage Products</h1>
-        <button
-          onClick={() => {
-            setForm(emptyProduct);
-            setEditing(null);
-            setIsModalOpen(true);
-          }}
-          className="btn-primary flex items-center gap-1.5"
-        >
-          <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
-          </svg>
-          Add Product
-        </button>
+        <div className="flex flex-wrap items-center gap-3">
+          <Link to="/admin" className="btn-secondary">
+            Back to Dashboard
+          </Link>
+          <button
+            onClick={() => {
+              setForm(emptyProduct);
+              setEditing(null);
+              setIsModalOpen(true);
+            }}
+            className="btn-primary flex items-center gap-1.5"
+          >
+            <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
+            </svg>
+            Add Product
+          </button>
+        </div>
       </div>
 
       {isModalOpen && (

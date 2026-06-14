@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import api from '../../api/axios';
 import Loader from '../../components/ui/Loader';
@@ -36,7 +37,12 @@ export default function AdminOrders() {
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
-      <h1 className="text-3xl font-bold">Manage Orders</h1>
+      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200 pb-5 dark:border-slate-800">
+        <h1 className="text-3xl font-bold">Manage Orders</h1>
+        <Link to="/admin" className="btn-secondary">
+          Back to Dashboard
+        </Link>
+      </div>
       <div className="mt-8 overflow-x-auto">
         <table className="w-full text-sm">
           <thead>
