@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
-import { getReviews, saveReviews } from '../../utils/reviews';
+import toast from 'react-hot-toast';
+import { createReview, DEFAULT_REVIEWS, fetchReviews } from '../../utils/reviews';
 
 function Stars({ rating, onChange, size = 'h-5 w-5' }) {
   return (
@@ -70,19 +71,21 @@ function buildMarqueeLoop(reviews) {
 }
 
 export default function ReviewSection() {
-  const [reviews, setReviews] = useState(getReviews);
+  const [reviews, setReviews] = useState(DEFAULT_REVIEWS);
   const [rating, setRating] = useState(0);
   const [name, setName] = useState('');
   const [message, setMessage] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
-    const syncReviews = () => setReviews(getReviews());
+    let isMounted = true;
 
-    window.addEventListener('storage', syncReviews);
-    window.addEventListener('sv:reviews-updated', syncReviews);
+    fetchReviews().then((nextReviews) => {
+      if (isMounted) setReviews(nextReviews);
+    });
+
     return () => {
-      window.removeEventListener('storage', syncReviews);
-      window.removeEventListener('sv:reviews-updated', syncReviews);
+      isMounted = false;
     };
   }, []);
 
@@ -93,26 +96,28 @@ export default function ReviewSection() {
 
   const marqueeItems = useMemo(() => buildMarqueeLoop(reviews), [reviews]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!rating || !message.trim()) return;
 
-    const nextReviews = [
-      {
-        id: `review-${Date.now()}`,
+    setIsSubmitting(true);
+    try {
+      const review = await createReview({
         name: name.trim() || 'Happy Customer',
         rating,
         text: message.trim(),
-        createdAt: new Date().toISOString(),
-      },
-      ...reviews,
-    ];
+      });
 
-    setReviews(nextReviews);
-    saveReviews(nextReviews);
-    setRating(0);
-    setName('');
-    setMessage('');
+      setReviews((currentReviews) => [review, ...currentReviews]);
+      setRating(0);
+      setName('');
+      setMessage('');
+      toast.success('Review shared. Thank you!');
+    } catch (error) {
+      toast.error(error.message || 'Failed to submit review');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -181,10 +186,10 @@ export default function ReviewSection() {
             <div className="mt-4 flex justify-end">
               <button
                 type="submit"
-                disabled={!rating || !message.trim()}
+                disabled={!rating || !message.trim() || isSubmitting}
                 className="btn-primary disabled:cursor-not-allowed disabled:opacity-50"
               >
-                Submit Review
+                {isSubmitting ? 'Submitting...' : 'Submit Review'}
               </button>
             </div>
           </form>

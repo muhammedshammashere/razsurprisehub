@@ -4,11 +4,11 @@ import api from '../../api/axios';
 import Loader from '../../components/ui/Loader';
 import { formatCurrency } from '../../utils/formatCurrency';
 import { useAuth } from '../../context/AuthContext';
-import { getReviews } from '../../utils/reviews';
+import { fetchReviews } from '../../utils/reviews';
 
 export default function Dashboard() {
   const [data, setData] = useState(null);
-  const [reviewCount, setReviewCount] = useState(() => getReviews().length);
+  const [reviewCount, setReviewCount] = useState(0);
   const { logout } = useAuth();
 
   useEffect(() => {
@@ -16,13 +16,18 @@ export default function Dashboard() {
   }, []);
 
   useEffect(() => {
-    const syncReviewCount = () => setReviewCount(getReviews().length);
+    let isMounted = true;
 
-    window.addEventListener('storage', syncReviewCount);
-    window.addEventListener('sv:reviews-updated', syncReviewCount);
+    fetchReviews({ fallbackToDefaults: false })
+      .then((reviews) => {
+        if (isMounted) setReviewCount(reviews.length);
+      })
+      .catch(() => {
+        if (isMounted) setReviewCount(0);
+      });
+
     return () => {
-      window.removeEventListener('storage', syncReviewCount);
-      window.removeEventListener('sv:reviews-updated', syncReviewCount);
+      isMounted = false;
     };
   }, []);
 
