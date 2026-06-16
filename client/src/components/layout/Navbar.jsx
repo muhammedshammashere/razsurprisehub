@@ -33,21 +33,29 @@ function CartIcon() {
 
 function DeliveryBoxIcon() {
   return (
-    <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+    <svg className="h-6 w-6" viewBox="0 0 24 24" fill="none" aria-hidden="true">
       <path
+        d="M4.5 8.25 12 4l7.5 4.25v7.5L12 20l-7.5-4.25v-7.5Z"
+        stroke="currentColor"
         strokeLinecap="round"
         strokeLinejoin="round"
-        strokeWidth="2"
-        d="M4 9h16v11H4V9z"
+        strokeWidth="1.9"
       />
       <path
+        d="M4.75 8.45 12 12.5l7.25-4.05M12 12.5v7.25"
+        stroke="currentColor"
         strokeLinecap="round"
         strokeLinejoin="round"
-        strokeWidth="2"
-        d="M4 9l8-4 8 4"
+        strokeWidth="1.9"
       />
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 5v4" />
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 14h16" />
+      <path
+        d="m8.25 6.35 7.45 4.18"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
+        opacity="0.75"
+      />
     </svg>
   );
 }
