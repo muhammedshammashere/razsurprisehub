@@ -2,6 +2,23 @@ import { useEffect, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 const COLORS = ['#ec407a', '#ff94bd', '#facc15', '#38bdf8', '#a78bfa', '#34d399', '#ffffff'];
+const CELEBRATION_SESSION_KEY = 'raz_surprise_landing_celebration_seen';
+
+const hasSeenCelebration = () => {
+  try {
+    return window.sessionStorage.getItem(CELEBRATION_SESSION_KEY) === 'true';
+  } catch {
+    return false;
+  }
+};
+
+const markCelebrationSeen = () => {
+  try {
+    window.sessionStorage.setItem(CELEBRATION_SESSION_KEY, 'true');
+  } catch {
+    // Ignore storage failures so the animation never breaks the page.
+  }
+};
 
 const buildPieces = (count) =>
   Array.from({ length: count }, (_, index) => {
@@ -47,6 +64,12 @@ export default function SessionCelebration() {
       return undefined;
     }
 
+    if (hasSeenCelebration()) {
+      setIsVisible(false);
+      return undefined;
+    }
+
+    markCelebrationSeen();
     setIsVisible(true);
 
     const hideTimer = window.setTimeout(() => setIsVisible(false), 3800);
