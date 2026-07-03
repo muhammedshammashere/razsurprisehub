@@ -18,6 +18,33 @@ function InstagramIcon({ className = 'h-4 w-4' }) {
   );
 }
 
+function PhoneIcon({ className = 'h-4 w-4' }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path
+        d="M6.6 10.8c1.4 2.7 3.6 4.9 6.3 6.3l2.1-2.1c.3-.3.7-.4 1.1-.3 1.2.4 2.5.6 3.8.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.8 21 3 13.2 3 3.9c0-.6.4-1 1-1h3.6c.6 0 1 .4 1 1 0 1.3.2 2.6.6 3.8.1.4 0 .8-.3 1.1l-2.3 2.2Z"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function MailIcon({ className = 'h-4 w-4' }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path
+        d="M4 6h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1Z"
+        stroke="currentColor"
+        strokeWidth="1.8"
+      />
+      <path d="m4 8 8 6 8-6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
 export default function Footer() {
   return (
     <footer className="mt-auto border-t border-brand-900/10 bg-brand-50/30 py-12 text-slate-600 backdrop-blur dark:border-brand-900/30 dark:bg-brand-950/90 dark:text-slate-400">
@@ -63,7 +90,8 @@ export default function Footer() {
             <ul className="space-y-2 text-xs">
               <li>
                 <a href="tel:+917907549067" className="flex items-center gap-1.5 transition-colors hover:text-brand-500">
-                  <span>📞+91 79075 49067</span>
+                  <PhoneIcon className="h-3.5 w-3.5 text-blue-500" />
+                  <span>+91 79075 49067</span>
                 </a>
               </li>
               <li>
@@ -79,8 +107,13 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-  
-                <span>📧support@razsurprisehub.com</span>
+                <a
+                  href="mailto:support@razsurprisehub.com"
+                  className="flex items-center gap-1.5 transition-colors hover:text-brand-500"
+                >
+                  <MailIcon className="h-3.5 w-3.5 text-amber-500" />
+                  <span>support@razsurprisehub.com</span>
+                </a>
               </li>
             </ul>
           </div>
