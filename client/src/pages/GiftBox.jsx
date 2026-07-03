@@ -1,14 +1,19 @@
 import { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
+import api from '../api/axios';
 import { useGiftBox } from '../context/GiftBoxContext';
 import Loader from '../components/ui/Loader';
 import { formatCurrency, getImageUrl } from '../utils/formatCurrency';
 
 export default function GiftBox() {
   const { giftBox, loading, fetchGiftBox, updateItem, removeItem, updateBox, setGiftBox } = useGiftBox();
+  const navigate = useNavigate();
   const [message, setMessage] = useState('');
   const [deliveryDate, setDeliveryDate] = useState('');
+  const [dateError, setDateError] = useState('');
   const [draftQuantities, setDraftQuantities] = useState({});
+  const [checkingOut, setCheckingOut] = useState(false);
   const quantityTimers = useRef({});
 
   useEffect(() => {
@@ -44,8 +49,57 @@ export default function GiftBox() {
     return d.toISOString().split('T')[0];
   };
 
-  const saveDetails = async () => {
-    await updateBox({ personalizedMessage: message, deliveryDate });
+  const saveDetails = async (overrides = {}) => {
+    const payload = {
+      personalizedMessage: overrides.message ?? message,
+      deliveryDate: overrides.deliveryDate ?? deliveryDate,
+    };
+    return updateBox(payload);
+  };
+
+  const handleProceedToCheckout = async () => {
+    if (!giftBox?.items?.length) {
+      toast.error('Your gift box is empty');
+      return;
+    }
+
+    if (!deliveryDate) {
+      setDateError('Please select a delivery date');
+      toast.error('Please select a delivery date');
+      return;
+    }
+
+    setDateError('');
+    setCheckingOut(true);
+
+    try {
+      await saveDetails({ message, deliveryDate });
+      const { data: orderRes } = await api.post('/orders', {});
+      const order = orderRes.order;
+
+      toast.success('Order created. Opening WhatsApp...');
+
+      const itemsText = (giftBox.items || [])
+        .map((item) => `- ${item.product.name} (Qty: ${item.quantity})`)
+        .join('\n');
+
+      const messageText = `Hello! I would like to place an order.
+
+*Order Number:* ${order.orderNumber}
+*Delivery Date:* ${new Date(order.deliveryDate).toLocaleDateString()}
+*Personalized Message:* ${order.personalizedMessage ? `"${order.personalizedMessage}"` : 'None'}
+
+*Items:*
+${itemsText}`;
+
+      const whatsappUrl = `https://wa.me/7907549067?text=${encodeURIComponent(messageText)}`;
+      window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+      navigate(`/orders/${order._id}`);
+    } catch (err) {
+      toast.error(err.message || 'Unable to place order');
+    } finally {
+      setCheckingOut(false);
+    }
   };
 
   const persistQuantity = (productId, quantity) => {
@@ -166,20 +220,25 @@ export default function GiftBox() {
             <input
               type="date"
               min={minDate()}
-              className="input-field date-field"
+              className={`input-field date-field ${dateError ? 'border-red-500 focus:border-red-500' : ''}`}
               value={deliveryDate}
-              onChange={(e) => setDeliveryDate(e.target.value)}
+              onChange={(e) => {
+                setDeliveryDate(e.target.value);
+                if (dateError) setDateError('');
+              }}
               onBlur={saveDetails}
             />
+            {dateError && <p className="mt-1 text-sm text-red-600">{dateError}</p>}
           </div>
           {items.length > 0 && (
-            <Link
-              to="/checkout"
-              className="btn-primary block w-full text-center"
-              onClick={saveDetails}
+            <button
+              type="button"
+              className="btn-primary block w-full text-center disabled:cursor-not-allowed disabled:opacity-70"
+              onClick={handleProceedToCheckout}
+              disabled={checkingOut}
             >
-              Proceed to Checkout
-            </Link>
+              {checkingOut ? 'Opening WhatsApp...' : 'Proceed to Checkout'}
+            </button>
           )}
         </div>
       </div>

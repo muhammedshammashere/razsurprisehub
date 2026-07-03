@@ -7,7 +7,6 @@ import ProductDetail from '../pages/ProductDetail';
 import Login from '../pages/Login';
 import Register from '../pages/Register';
 import GiftBox from '../pages/GiftBox';
-import Checkout from '../pages/Checkout';
 import Orders from '../pages/Orders';
 import OrderDetail from '../pages/OrderDetail';
 import Dashboard from '../pages/admin/Dashboard';
@@ -39,7 +38,6 @@ export default function AppRoutes() {
         <Route path="register" element={<Navigate to="/" replace />} />
         <Route element={<ProtectedRoute />}>
           <Route path="gift-box" element={<GiftBox />} />
-          <Route path="checkout" element={<Checkout />} />
           <Route path="orders" element={<Orders />} />
           <Route path="orders/:id" element={<OrderDetail />} />
         </Route>

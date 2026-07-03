@@ -17,14 +17,6 @@ const emptyProduct = {
 
 const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
 
-const readFileAsDataUrl = (file) =>
-  new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = () => reject(new Error('Failed to read image file'));
-    reader.readAsDataURL(file);
-  });
-
 const getImageLabel = (url) => {
   if (!url) return '';
   if (url.startsWith('data:')) return 'Uploaded image';
@@ -39,6 +31,7 @@ export default function AdminProducts() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [imageSourceType, setImageSourceType] = useState('upload');
   const [uploading, setUploading] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
 
   const handleFileUpload = async (e) => {
     const file = e.target.files[0];
@@ -58,25 +51,35 @@ export default function AdminProducts() {
 
     setUploading(true);
     try {
-      const imageUrl = await readFileAsDataUrl(file);
+      const formData = new FormData();
+      formData.append('image', file);
+
+      const { data } = await api.post('/products/upload', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+
       setForm((prev) => ({
         ...prev,
-        images: [{ url: imageUrl }],
+        images: [{ url: data.url }],
       }));
-      toast.success('Image ready. Save changes to publish it.');
+      toast.success('Image uploaded successfully.');
     } catch (err) {
-      toast.error(err.message || 'Failed to prepare image');
+      toast.error(err.message || 'Failed to upload image');
     } finally {
       setUploading(false);
       e.target.value = '';
     }
   };
 
-  const load = () => {
-    api.get('/admin/products').then(({ data }) => {
-      setProducts(data.products);
+  const load = async () => {
+    try {
+      const { data } = await api.get('/admin/products');
+      setProducts(data.products || []);
+    } catch (err) {
+      toast.error(err.message || 'Failed to load products');
+    } finally {
       setLoading(false);
-    });
+    }
   };
 
   useEffect(() => {
@@ -93,6 +96,7 @@ export default function AdminProducts() {
     setIsModalOpen(false);
     setForm(emptyProduct);
     setEditing(null);
+    setImageSourceType('upload');
     const url = new URL(window.location);
     url.searchParams.delete('action');
     window.history.pushState({}, '', url);
@@ -100,18 +104,28 @@ export default function AdminProducts() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (submitting) return;
+
+    setSubmitting(true);
     try {
+      const payload = {
+        ...form,
+        images: (form.images || []).filter((image) => image?.url).map((image) => ({ url: image.url })),
+      };
+
       if (editing) {
-        await api.put(`/products/${editing}`, form);
+        await api.put(`/products/${editing}`, payload);
         toast.success('Product updated');
       } else {
-        await api.post('/products', form);
+        await api.post('/products', payload);
         toast.success('Product created');
       }
       closeModal();
-      load();
+      await load();
     } catch (err) {
       toast.error(err.message);
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -355,8 +369,8 @@ export default function AdminProducts() {
                 >
                   Cancel
                 </button>
-                <button type="submit" className="btn-primary">
-                  {editing ? 'Save Changes' : 'Create Product'}
+                <button type="submit" className="btn-primary disabled:opacity-70" disabled={submitting}>
+                  {submitting ? 'Saving...' : editing ? 'Save Changes' : 'Create Product'}
                 </button>
               </div>
             </form>
