@@ -56,7 +56,7 @@ export default function ProductDetail() {
         ← Back to shop
       </Link>
       <div className="mt-8 grid gap-10 lg:grid-cols-2">
-        <div className="flex min-h-[320px] items-center justify-center rounded-xl bg-gray-50 p-4 dark:bg-gray-900 sm:min-h-[420px]">
+        <div className="flex min-h-[320px] items-center justify-center rounded-xl bg-gray-50 p-6 dark:bg-gray-900 sm:min-h-[420px]">
           <img
             src={getImageUrl(product.images?.[0]?.url)}
             alt={product.name}
