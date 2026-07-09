@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node startup.js",
     "dev": "node startup.js",
+    "build": "cd client && npm run build",
     "seed": "cd server && npm run seed"
   },
   "keywords": [
