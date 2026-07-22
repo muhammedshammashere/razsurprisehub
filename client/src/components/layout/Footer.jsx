@@ -89,13 +89,13 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2 text-xs">
               <li>
-                <a href="tel:+917907549067" className="flex items-center gap-1.5 transition-colors hover:text-brand-500">
-                  <PhoneIcon className="h-3.5 w-3.5 text-blue-500" />
-                  <span>+91 79075 49067</span>
+                <a href="tel:+966593715537" className="flex items-center gap-1.5 transition-colors hover:text-brand-500">
+                  <PhoneIcon className="h-3.5 w-3.5 5text-blue-500" />
+                  <span>+966 59 371 5537</span>
                 </a>
               </li>
               <li>
-                <a href="https://wa.me/7907549067" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 transition-colors hover:text-brand-500">
+                <a href="https://wa.me/966593715537" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 transition-colors hover:text-brand-500">
                   <WhatsAppIcon className="h-3.5 w-3.5 text-green-500" />
                   <span>Chat on WhatsApp</span>
                 </a>
@@ -112,7 +112,7 @@ export default function Footer() {
                   className="flex items-center gap-1.5 transition-colors hover:text-brand-500"
                 >
                   <MailIcon className="h-3.5 w-3.5 text-amber-500" />
-                  <span>support@razsurprisehub.com</span>
+                  <span>razsurprisehub@gmail.com</span>
                 </a>
               </li>
             </ul>

@@ -69,7 +69,7 @@ export const deleteProduct = asyncHandler(async (req, res) => {
 
 export const uploadProductImage = asyncHandler(async (req, res) => {
   if (!req.file) throw new ApiError(400, 'No image uploaded');
-  const imageUrl = `/uploads/${req.file.filename}`;
+  const imageUrl = `data:${req.file.mimetype};base64,${req.file.buffer.toString('base64')}`;
   const product = await Product.findByIdAndUpdate(
     req.params.id,
     { $push: { images: { url: imageUrl } } },

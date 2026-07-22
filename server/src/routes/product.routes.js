@@ -21,8 +21,8 @@ router.post('/upload', protect, adminOnly, upload.single('image'), (req, res) =>
   if (!req.file) {
     return res.status(400).json({ success: false, message: 'No file uploaded' });
   }
-  const imageUrl = `/uploads/${req.file.filename}`;
-  res.json({ success: true, url: imageUrl });
+  const base64Image = `data:${req.file.mimetype};base64,${req.file.buffer.toString('base64')}`;
+  res.json({ success: true, url: base64Image });
 });
 
 router.post('/', protect, adminOnly, createProduct);
