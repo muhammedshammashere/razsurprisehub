@@ -47,7 +47,16 @@ export default function Orders() {
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
       <h1 className="text-3xl font-bold">Order History</h1>
       {orders.length === 0 ? (
-        <p className="mt-8 text-gray-500 dark:text-gray-400">No orders yet.</p>
+        <div className="card mt-8 text-center py-12 max-w-lg mx-auto flex flex-col items-center">
+          <div className="text-5xl mb-4 select-none">🛍️</div>
+          <h2 className="text-xl font-bold text-slate-800 dark:text-slate-100">No orders found</h2>
+          <p className="mt-2 text-sm text-slate-500 dark:text-gray-400 max-w-sm">
+            It looks like you haven't built any surprise gift boxes yet. Start exploring our collection and create one!
+          </p>
+          <Link to="/shop" className="btn-primary mt-6 inline-block text-sm">
+            Start Customizing Your Box
+          </Link>
+        </div>
       ) : (
         <div className="mt-8 space-y-4">
           {orders.map((order) => (

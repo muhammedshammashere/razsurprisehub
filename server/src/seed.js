@@ -88,13 +88,9 @@ const seed = async () => {
     console.log('Customer already exists');
   }
 
-  const count = await Product.countDocuments();
-  if (count === 0) {
-    await Product.insertMany(sampleProducts);
-    console.log(`Seeded ${sampleProducts.length} products`);
-  } else {
-    console.log('Products already seeded');
-  }
+  await Product.deleteMany({});
+  await Product.insertMany(sampleProducts);
+  console.log(`Seeded ${sampleProducts.length} products`);
 
   console.log('Categories:', CATEGORIES.join(', '));
   process.exit(0);

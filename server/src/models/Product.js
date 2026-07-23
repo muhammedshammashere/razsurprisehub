@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import { FirestoreModel } from '../utils/firebaseModel.js';
 
 export const CATEGORIES = [
   'Chocolates',
@@ -9,29 +9,31 @@ export const CATEGORIES = [
   'Custom Gifts',
 ];
 
-const productSchema = new mongoose.Schema(
-  {
-    name: { type: String, required: true, trim: true },
-    slug: { type: String, unique: true, sparse: true },
-    description: { type: String, required: true },
-    category: { type: String, enum: CATEGORIES, required: true },
-    price: { type: Number, required: true, min: 0 },
-    stock: { type: Number, default: 0, min: 0 },
-    images: [{ url: String }],
-    isActive: { type: Boolean, default: true },
-    tags: [String],
-  },
-  { timestamps: true }
-);
+const Product = new FirestoreModel({
+  collectionName: 'products',
+  fields: [
+    { name: 'name' },
+    { name: 'slug' },
+    { name: 'description' },
+    { name: 'category' },
+    { name: 'price' },
+    { name: 'stock', default: 0 },
+    { name: 'images' },
+    { name: 'isActive', default: true },
+    { name: 'tags' },
+    { name: 'createdAt' },
+    { name: 'updatedAt' }
+  ],
+  timestamps: true
+});
 
-productSchema.pre('save', function (next) {
+Product.pre('save', function () {
   if (!this.slug && this.name) {
     this.slug = this.name
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/(^-|-$)/g, '');
   }
-  next();
 });
 
-export default mongoose.model('Product', productSchema);
+export default Product;

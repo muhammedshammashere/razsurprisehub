@@ -6,7 +6,7 @@ Production-ready MERN gift box e-commerce platform with JWT auth, gift box build
 
 - **Frontend:** React, Vite, Tailwind CSS, React Router
 - **Backend:** Node.js, Express.js
-- **Database:** MongoDB Atlas
+- **Database:** Firebase Firestore (via custom Mongoose-compatibility wrapper)
 - **Auth:** JWT
 - **Payments:** Razorpay
 
@@ -23,16 +23,16 @@ surprise-venture/
 
 See [documentation/INSTALLATION.md](documentation/INSTALLATION.md) for full setup.
 
-### 1. MongoDB Atlas
+### 1. Firebase Setup
 
-Create a cluster and copy your connection string.
+Create a Firebase project, download a service account JSON, and place it in the `server` directory as `service-account.json`.
 
 ### 2. Backend
 
 ```bash
 cd server
 cp .env.example .env
-# Edit .env with MONGODB_URI, JWT_SECRET, Razorpay keys
+# Edit .env with JWT_SECRET, Razorpay keys, and FIREBASE_SERVICE_ACCOUNT (optional)
 npm install
 npm run seed
 npm run dev
@@ -50,10 +50,10 @@ npm run dev
 - App: http://localhost:5173
 - API: http://localhost:5000/api
 
-### Default admin (after seed)
+### Default credentials (after seed)
 
-- Email: ``
-- Password: `admin123456`
+- **Admin:** `admin@razsurprisehub.com` / `adminraz@2026`
+- **Guest Customer:** `customer@surpriseventure.com` / `customer123456`
 
 ## Features
 

@@ -1,8 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import api from '../api/axios';
 import Loader from '../components/ui/Loader';
 import { ORDER_STATUS_LABELS, ORDER_STATUS_COLORS } from '../utils/constants';
+import { formatCurrency } from '../utils/formatCurrency';
+import { useAuth } from '../context/AuthContext';
+import { openRazorpayCheckout } from '../components/orders/RazorpayCheckout';
 
 const STEPS = ['pending', 'paid', 'processing', 'shipped', 'delivered'];
 
@@ -17,10 +21,43 @@ function WhatsAppIcon({ className = 'h-4 w-4' }) {
 export default function OrderDetail() {
   const { id } = useParams();
   const [order, setOrder] = useState(null);
+  const [paying, setPaying] = useState(false);
+  const { user } = useAuth();
 
   useEffect(() => {
     api.get(`/orders/${id}`).then(({ data }) => setOrder(data.order));
   }, [id]);
+
+  const handlePayNow = async () => {
+    setPaying(true);
+    try {
+      const { data } = await api.post('/payments/create-order', { orderId: id });
+      
+      await openRazorpayCheckout({
+        keyId: data.keyId,
+        razorpayOrderId: data.razorpayOrderId,
+        amount: data.amount,
+        orderId: id,
+        user,
+        onSuccess: async (verificationData) => {
+          try {
+            const verifyRes = await api.post('/payments/verify', verificationData);
+            setOrder(verifyRes.data.order);
+            toast.success('Payment completed successfully!');
+          } catch (verifyErr) {
+            toast.error(verifyErr.message || 'Payment verification failed');
+          }
+        },
+        onFailure: (errMsg) => {
+          toast.error(errMsg || 'Payment failed');
+        }
+      });
+    } catch (err) {
+      toast.error(err.response?.data?.message || err.message || 'Payment initialization failed');
+    } finally {
+      setPaying(false);
+    }
+  };
 
   if (!order) return <Loader />;
 
@@ -92,6 +129,25 @@ ${itemsText}`;
         <p className="mt-4 text-sm text-gray-500 dark:text-gray-400">
           Delivery: {new Date(order.deliveryDate).toLocaleDateString()}
         </p>
+
+        {order.status === 'pending' && (
+          <div className="mt-6 rounded-xl border border-brand-900/10 bg-white/60 p-5 shadow-sm dark:border-brand-400/15 dark:bg-white/5">
+            <h3 className="font-semibold text-brand-950 dark:text-white">Pay Online Securely</h3>
+            <p className="mt-1 text-sm text-slate-600 dark:text-slate-300">
+              Complete payment instantly via UPI, Cards, Netbanking, or Wallet. Your order status will update in real-time.
+            </p>
+            <div className="mt-4 flex flex-wrap items-center gap-4">
+              <button
+                type="button"
+                onClick={handlePayNow}
+                disabled={paying}
+                className="btn-primary flex items-center justify-center gap-2 text-sm disabled:cursor-not-allowed disabled:opacity-75"
+              >
+                {paying ? 'Processing...' : `Pay ${formatCurrency(order.total || 0)} Now`}
+              </button>
+            </div>
+          </div>
+        )}
 
         <div className="mt-8 flex flex-col justify-between gap-4 border-t border-brand-900/10 pt-6 dark:border-brand-900/25 sm:flex-row sm:items-center">
           <p className="text-xs text-gray-500 dark:text-gray-400">

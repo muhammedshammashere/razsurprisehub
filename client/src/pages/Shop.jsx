@@ -5,7 +5,7 @@ import api from '../api/axios';
 import { useAuth } from '../context/AuthContext';
 import { useGiftBox } from '../context/GiftBoxContext';
 import ProductCard from '../components/products/ProductCard';
-import Loader from '../components/ui/Loader';
+import SkeletonLoader from '../components/ui/SkeletonLoader';
 import { CATEGORIES, CATEGORY_EMOJIS } from '../utils/constants';
 
 export default function Shop() {
@@ -97,7 +97,7 @@ export default function Shop() {
         />
       </div>
       {loading ? (
-        <Loader />
+        <SkeletonLoader type="card" count={6} />
       ) : (
         <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {products.map((p) => (
