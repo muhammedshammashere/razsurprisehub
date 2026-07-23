@@ -3,7 +3,7 @@
 ## Overview
 
 ```
-[React Client]  --JWT/API-->  [Express API]  --Mongoose-->  [MongoDB Atlas]
+[React Client]  --JWT/API-->  [Express API]  --Firestore Wrapper-->  [Firebase Firestore]
                                     |
                               [Razorpay API]
 ```
@@ -14,9 +14,9 @@
 |-------|----------------|
 | Routes | HTTP mapping, middleware chain |
 | Controllers | Business logic, validation |
-| Models | Mongoose schemas & hooks |
+| Models | Firebase compatibility wrapper & hooks |
 | Middleware | Auth, admin, errors, uploads |
-| Config | DB, Razorpay singleton |
+| Config | DB connection (Firebase Admin), Razorpay singleton |
 
 ## Data models
 
@@ -53,5 +53,5 @@
 
 - Never expose `RAZORPAY_KEY_SECRET` to client
 - Use strong `JWT_SECRET` in production
-- Restrict MongoDB network access in production
+- Secure Firebase Firestore with rules and service account keys in production
 - Validate delivery dates server-side

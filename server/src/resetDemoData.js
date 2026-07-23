@@ -1,5 +1,4 @@
 import dotenv from 'dotenv';
-import mongoose from 'mongoose';
 import { connectDB } from './config/db.js';
 import User from './models/User.js';
 import Order from './models/Order.js';
@@ -20,8 +19,6 @@ const resetDemoData = async () => {
   console.log(`Removed ${deletedOrders.deletedCount} orders`);
   console.log(`Removed ${deletedGiftBoxes.deletedCount} gift boxes`);
   console.log('Remaining admin accounts:', admins);
-
-  await mongoose.disconnect();
 };
 
 resetDemoData().catch((err) => {

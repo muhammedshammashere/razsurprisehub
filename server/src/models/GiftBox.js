@@ -1,33 +1,49 @@
-import mongoose from 'mongoose';
+import { FirestoreModel } from '../utils/firebaseModel.js';
 
-const boxItemSchema = new mongoose.Schema({
-  product: { type: mongoose.Schema.Types.ObjectId, ref: 'Product', required: true },
-  quantity: { type: Number, required: true, min: 1, default: 1 },
-  unitPrice: { type: Number, required: true },
+const GiftBox = new FirestoreModel({
+  collectionName: 'giftboxes',
+  fields: [
+    { name: 'user' },
+    { name: 'items' },
+    { name: 'personalizedMessage' },
+    { name: 'deliveryDate' },
+    { name: 'packagingFee' },
+    { name: 'subtotal' },
+    { name: 'total' },
+    { name: 'status' },
+    { name: 'createdAt' },
+    { name: 'updatedAt' }
+  ],
+  timestamps: true
 });
 
-const giftBoxSchema = new mongoose.Schema(
-  {
-    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-    items: [boxItemSchema],
-    personalizedMessage: { type: String, maxlength: 500, default: '' },
-    deliveryDate: { type: Date },
-    packagingFee: { type: Number, default: 99 },
-    subtotal: { type: Number, default: 0 },
-    total: { type: Number, default: 0 },
-    status: { type: String, enum: ['draft', 'converted'], default: 'draft' },
-  },
-  { timestamps: true }
-);
-
-giftBoxSchema.methods.recalculate = function () {
-  this.subtotal = this.items.reduce((sum, item) => sum + item.unitPrice * item.quantity, 0);
-  this.total = this.subtotal + (this.packagingFee || 0);
+GiftBox.methods.recalculate = function () {
+  const items = this.items || [];
+  this.subtotal = items.reduce((sum, item) => sum + (Number(item.unitPrice) || 0) * (Number(item.quantity) || 0), 0);
+  this.total = this.subtotal + (Number(this.packagingFee) || 99);
 };
 
-giftBoxSchema.pre('save', function (next) {
+GiftBox.pre('save', function () {
+  if (this.personalizedMessage === undefined) {
+    this.personalizedMessage = '';
+  }
+  if (this.packagingFee === undefined) {
+    this.packagingFee = 99;
+  }
+  if (this.subtotal === undefined) {
+    this.subtotal = 0;
+  }
+  if (this.total === undefined) {
+    this.total = 0;
+  }
+  if (this.status === undefined) {
+    this.status = 'draft';
+  }
+  if (!this.items) {
+    this.items = [];
+  }
+
   this.recalculate();
-  next();
 });
 
-export default mongoose.model('GiftBox', giftBoxSchema);
+export default GiftBox;

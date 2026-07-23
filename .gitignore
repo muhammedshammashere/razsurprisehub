@@ -10,3 +10,5 @@ uploads/*
 Thumbs.db
 .vscode/
 .idea/
+service-account.json
+
