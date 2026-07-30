@@ -2,12 +2,26 @@
   "name": "surprise-venture",
   "version": "1.0.0",
   "description": "Raz Surprise Hub Gift Box E-Commerce Platform",
-  "main": "startup.js",
+  "type": "module",
+  "main": "startup.cjs",
   "scripts": {
-    "start": "node startup.js",
-    "dev": "node startup.js",
+    "start": "node startup.cjs",
+    "dev": "node startup.cjs",
     "build": "cd client && npm run build",
     "seed": "cd server && npm run seed"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cloudinary": "^2.10.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "express-validator": "^7.2.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.7.0",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
+    "razorpay": "^2.9.4"
   },
   "keywords": [
     "giftbox",
